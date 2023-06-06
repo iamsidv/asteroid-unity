@@ -78,5 +78,14 @@ namespace Asteroids.Game.Runtime
             if (instance.game != null)
                 instance.game.UpdateGame();
         }
+
+        private void FixedUpdate()
+        {
+            if (gameState != GameState.Running)
+                return;
+
+            if (instance.game != null)
+                instance.game.OnFixedUpdate();
+        }
     }
 }

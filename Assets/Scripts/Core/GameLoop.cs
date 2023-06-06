@@ -50,6 +50,14 @@ namespace Asteroids.Game.Core
             }
         }
 
+        public void OnFixedUpdate()
+        {
+            for (int i = 0; i < gameEntities?.Count; i++)
+            {
+                gameEntities[i].FixedUpdateEntity();
+            }
+        }
+
         public void HandleScreenWarp(Transform target, Vector3 direction)
         {
             if (target != null)
@@ -78,5 +86,7 @@ namespace Asteroids.Game.Core
                 target.position = pos;
             }
         }
+
+        
     }
 }

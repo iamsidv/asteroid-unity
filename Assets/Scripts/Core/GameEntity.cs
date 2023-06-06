@@ -36,5 +36,9 @@ namespace Asteroids.Game.Core
         {
             _direction = direction;
         }
+
+        public virtual void FixedUpdateEntity()
+        {
+        }
     }
 }

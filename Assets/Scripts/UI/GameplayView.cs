@@ -25,6 +25,7 @@ namespace Asteroids.Game.UI
             for (int i = 0; i < totalChances.Length; i++)
             {
                 totalChances[i] = Instantiate(chanceImage, stubChances.transform);
+                totalChances[i].gameObject.SetActive(true);
             }
         }
 

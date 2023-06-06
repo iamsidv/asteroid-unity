@@ -42,13 +42,18 @@ namespace Asteroids.Game.Runtime
             }
         }
 
-        private void FixedUpdate()
+        public override void FixedUpdateEntity()
         {
             var _addThrust = Input.GetAxis("Vertical") != 0;
             if (_addThrust && shipRigidbody2D != null)
             {
                 shipRigidbody2D.AddForce(MoveDirection * maxThrust, ForceMode2D.Force);
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log(collision.gameObject.tag);
         }
     }
 }

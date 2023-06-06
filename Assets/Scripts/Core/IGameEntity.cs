@@ -8,6 +8,8 @@ namespace Asteroids.Game.Core
         void DisposeEntity();
         void SetVisibility(bool isVisible);
         UnityEngine.GameObject GameObject { get; }
+
+        void FixedUpdateEntity();
     }
 
     public interface IGame
@@ -16,6 +18,7 @@ namespace Asteroids.Game.Core
         void RemoveGameEntity(IGameEntity gameEntity);
         void OnStateChanged(IGameState state);
         void UpdateGame();
+        void OnFixedUpdate();
     }
 
     public interface IGameState

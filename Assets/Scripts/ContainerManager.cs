@@ -1,4 +1,6 @@
 using Asteroids.Game.Core;
+using Asteroids.Game.Signals;
+using System;
 using UnityEngine;
 
 namespace Asteroids.Game.Runtime
@@ -7,6 +9,7 @@ namespace Asteroids.Game.Runtime
     {
         private IGame game;
         private static ContainerManager instance;
+        public GameState gameState;
 
         private void Awake()
         {
@@ -14,6 +17,21 @@ namespace Asteroids.Game.Runtime
                 instance = this;
 
             game = new GameLoop();
+        }
+
+        private void OnEnable()
+        {
+            SignalService.Subscribe<GameStateUpdateSignal>(SetGameState);
+        }
+
+        private void SetGameState(GameStateUpdateSignal signal)
+        {
+            gameState = signal.Value;
+        }
+
+        private void OnDisable()
+        {
+            SignalService.RemoveSignal<GameStateUpdateSignal>(SetGameState);
         }
 
         public static void AddEntity(IGameEntity entity)
@@ -54,6 +72,9 @@ namespace Asteroids.Game.Runtime
 
         private void Update()
         {
+            if (gameState != GameState.Running)
+                return;
+
             if (instance.game != null)
                 instance.game.UpdateGame();
         }

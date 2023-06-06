@@ -11,17 +11,14 @@ namespace Asteroids.Game.Runtime
         [SerializeField] private GameEntity bullet;
         [SerializeField] private float nextBulletSpawnTime = 1f;
 
-
-        private bool _addThrust;
-        public float currentTime;
-
+        private float _currentTime;
 
         public override void Initialize()
         {
             base.Initialize();
         
             SetDirection(new Vector2(0, 1));
-            currentTime = 0;
+            _currentTime = 0;
         }
 
         public override void UpdateEntity()
@@ -35,14 +32,13 @@ namespace Asteroids.Game.Runtime
                 SetDirection(transform.TransformDirection(Vector3.up));
             }
 
-            if (Input.GetKeyDown(KeyCode.Z) && Time.time - currentTime > nextBulletSpawnTime)
+            if (Input.GetKeyDown(KeyCode.Z) && Time.time - _currentTime > nextBulletSpawnTime)
             {
                 var position = transform.TransformPoint(new Vector2(0, 0.6f));
-                var obj = Instantiate(bullet as GameEntity, position, Quaternion.identity);
+                var obj = PrefabHolder.instance.InstantiatePlayerBullet(position);
                 obj.SetDirection(MoveDirection);
-                obj.SetVisibility(true);
 
-                currentTime = Time.time;
+                _currentTime = Time.time;
             }
         }
 
@@ -54,20 +50,5 @@ namespace Asteroids.Game.Runtime
                 shipRigidbody2D.AddForce(MoveDirection * maxThrust, ForceMode2D.Force);
             }
         }
-
-        
-
-        //public override void UpdateEntity()
-        //{
-            //var horizontal = Input.GetAxisRaw("Horizontal");
-            //_addThrust = Input.GetAxisRaw("Vertical") != 0;
-
-            //if (horizontal != 0)
-            //{
-            //    var sign = Mathf.Sign(horizontal) * -1f;
-            //    transform.Rotate(Vector3.forward * Time.deltaTime * rotateSpeed * sign);
-            //    _moveDirection = transform.TransformDirection(Vector3.up);
-            //}
-        //}
     }
 }

@@ -16,6 +16,8 @@ namespace Asteroids.Game.Runtime
         }
 
         [SerializeField] private AsteroidSize sizeType;
+        [SerializeField] private string[] spawnOnDestroyIds;
+
 
         public override void DisposeEntity()
         {
@@ -28,13 +30,20 @@ namespace Asteroids.Game.Runtime
             switch (sizeType)
             {
                 case AsteroidSize.Large:
-                    Debug.Log("Generate 2 medium");
+                    for (int i = 0; i < 2; i++)
+                    {
+                       PrefabHolder.instance.InstantiateEntity("ast_2", transform.position);
+                    }
+
                     break;
                 case AsteroidSize.Medium:
-                    Debug.Log("Generate 2 small");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        PrefabHolder.instance.InstantiateEntity("ast_3", transform.position);
+                    }
                     break;
                 case AsteroidSize.Small:
-                    Debug.Log("Do Nothing man!!");
+                    
                     break;
                 default:
                     break;

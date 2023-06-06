@@ -41,8 +41,12 @@ namespace Asteroids.Game.Runtime
         {
             var direction = Random.insideUnitCircle.normalized;
             var position = transform.position + (Vector3)direction;
-            var obj = Instantiate(bulletEntity as GameEntity, position, Quaternion.identity);
-            obj.SetVisibility(true);
+            //var obj = Instantiate(bulletEntity as GameEntity, position, Quaternion.identity);
+            //obj.SetVisibility(true);
+            //obj.SetDirection(direction);
+
+
+            var obj = PrefabHolder.instance.InstantiateEnemyBullet(position);
             obj.SetDirection(direction);
         }
     }

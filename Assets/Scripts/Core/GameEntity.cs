@@ -1,20 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using Asteroids.Game.Runtime;
 using UnityEngine;
 
 namespace Asteroids.Game.Core
 {
     public abstract class GameEntity : MonoBehaviour, IGameEntity
     {
-        protected Vector2 _direction;
+        private Vector2 _direction;
 
         public GameObject GameObject => gameObject;
+        protected Vector3 MoveDirection => _direction;
 
-        public abstract void Initialize();
         public abstract void UpdateEntity();
+
+        private void Start()
+        {
+            ContainerManager.AddEntity(this);
+        }
+
+        public virtual void Initialize()
+        {
+        }
 
         public virtual void OnDestroy()
         {
+            ContainerManager.RemoveEntity(this);
             Destroy(gameObject);
         }
 
@@ -23,7 +32,7 @@ namespace Asteroids.Game.Core
             gameObject.SetActive(isVisible);
         }
 
-        public void Init(Vector2 direction)
+        public void SetDirection(Vector2 direction)
         {
             _direction = direction;
         }

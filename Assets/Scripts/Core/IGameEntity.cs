@@ -2,7 +2,7 @@ namespace Asteroids.Game.Core
 {
     public interface IGameEntity
     {
-        void Init(UnityEngine.Vector2 direction);
+        void SetDirection(UnityEngine.Vector2 direction);
         void Initialize();
         void UpdateEntity();
         void OnDestroy();
@@ -15,6 +15,7 @@ namespace Asteroids.Game.Core
         void AddGameEntity(IGameEntity gameEntity);
         void RemoveGameEntity(IGameEntity gameEntity);
         void OnStateChanged(IGameState state);
+        void UpdateGame();
     }
 
     public interface IGameState

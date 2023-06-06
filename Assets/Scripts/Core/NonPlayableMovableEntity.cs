@@ -3,28 +3,18 @@ using UnityEngine;
 
 namespace Asteroids.Game.Core
 {
-    public class NonPlayableMovableEntity : GameEntity
+    public abstract class NonPlayableMovableEntity : GameEntity
     {
-        [SerializeField] protected float speed = 4f;
+        [SerializeField] private float speed = 4f;
 
         public override void Initialize()
         {
-           
+            SetDirection(Random.insideUnitCircle.normalized);
         }
 
         public override void UpdateEntity()
         {
-            
+            transform.position += speed * Time.deltaTime * MoveDirection;
         }
-
-        private void Start()
-        {
-            _direction = Random.insideUnitCircle.normalized;
-        }
-
-        //private void Update()
-        //{
-        //    transform.position += speed * Time.deltaTime * (Vector3)_direction;
-        //}
     }
 }

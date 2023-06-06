@@ -9,7 +9,13 @@ namespace Asteroids.Game.Core
         private Vector3 bottomLeftPoint;
         private Vector3 topRightPoint;
 
-        private void Initialize()
+        public GameLoop()
+        {
+            gameEntities = new List<IGameEntity>();
+            SetCameraBounds();
+        }
+
+        private void SetCameraBounds()
         {
             var cameraZ = Camera.main.transform.position.z;
             bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
@@ -50,22 +56,22 @@ namespace Asteroids.Game.Core
             {
                 var pos = target.position;
 
-                if (pos.x < bottomLeftPoint.x - 1f)
+                if (pos.x < bottomLeftPoint.x - 0.3f)
                 {
-                    pos.x = topRightPoint.x + 1;
+                    pos.x = topRightPoint.x + 0.3f;
                 }
-                else if (pos.x > topRightPoint.x + 1f)
+                else if (pos.x > topRightPoint.x + 0.3f)
                 {
-                    pos.x = bottomLeftPoint.x - 1;
+                    pos.x = bottomLeftPoint.x - 0.3f;
                 }
 
-                if (pos.y < bottomLeftPoint.y - 1f)
+                if (pos.y < bottomLeftPoint.y - 0.3f)
                 {
-                    pos.y = topRightPoint.y + 1;
+                    pos.y = topRightPoint.y + 0.3f;
                 }
-                else if (pos.y > topRightPoint.y + 1f)
+                else if (pos.y > topRightPoint.y + 0.3f)
                 {
-                    pos.y = bottomLeftPoint.y - 1;
+                    pos.y = bottomLeftPoint.y - 0.3f;
                 }
 
                 target.position = pos;

@@ -9,6 +9,7 @@ namespace Asteroids.Game.Core
 
         public override void Initialize()
         {
+            base.Initialize();
             SetDirection(Random.insideUnitCircle.normalized);
         }
 

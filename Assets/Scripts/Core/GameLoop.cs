@@ -55,23 +55,24 @@ namespace Asteroids.Game.Core
             if (target != null)
             {
                 var pos = target.position;
+                var offset = target.localScale * 0.5f;
 
-                if (pos.x < bottomLeftPoint.x - 0.3f)
+                if (pos.x < bottomLeftPoint.x - offset.x)
                 {
-                    pos.x = topRightPoint.x + 0.3f;
+                    pos.x = topRightPoint.x + offset.x;
                 }
-                else if (pos.x > topRightPoint.x + 0.3f)
+                else if (pos.x > topRightPoint.x + offset.x)
                 {
-                    pos.x = bottomLeftPoint.x - 0.3f;
+                    pos.x = bottomLeftPoint.x - offset.x;
                 }
 
-                if (pos.y < bottomLeftPoint.y - 0.3f)
+                if (pos.y < bottomLeftPoint.y - offset.y)
                 {
-                    pos.y = topRightPoint.y + 0.3f;
+                    pos.y = topRightPoint.y + offset.y;
                 }
-                else if (pos.y > topRightPoint.y + 0.3f)
+                else if (pos.y > topRightPoint.y + offset.y)
                 {
-                    pos.y = bottomLeftPoint.y - 0.3f;
+                    pos.y = bottomLeftPoint.y - offset.y;
                 }
 
                 target.position = pos;

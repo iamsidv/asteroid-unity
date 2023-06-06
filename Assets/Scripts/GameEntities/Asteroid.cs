@@ -17,10 +17,10 @@ namespace Asteroids.Game.Runtime
 
         [SerializeField] private AsteroidSize sizeType;
 
-        public override void OnDestroy()
+        public override void DisposeEntity()
         {
             SplitEntity();
-            base.OnDestroy();
+            base.DisposeEntity();
         }
 
         private void SplitEntity()

@@ -5,7 +5,7 @@ namespace Asteroids.Game.Core
         void SetDirection(UnityEngine.Vector2 direction);
         void Initialize();
         void UpdateEntity();
-        void OnDestroy();
+        void DisposeEntity();
         void SetVisibility(bool isVisible);
         UnityEngine.GameObject GameObject { get; }
     }

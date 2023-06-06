@@ -21,7 +21,7 @@ namespace Asteroids.Game.Core
         {
         }
 
-        public virtual void OnDestroy()
+        public virtual void DisposeEntity()
         {
             ContainerManager.RemoveEntity(this);
             Destroy(gameObject);

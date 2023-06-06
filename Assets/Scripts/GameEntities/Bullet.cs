@@ -15,9 +15,9 @@ namespace Asteroids.Game.Runtime
             {
                 var entity = collision.gameObject.GetComponent<GameEntity>();
                 if (entity != null)
-                    entity.OnDestroy();
+                    entity.DisposeEntity();
 
-                OnDestroy();
+                DisposeEntity();
             }
         }
 
@@ -28,7 +28,7 @@ namespace Asteroids.Game.Runtime
             timestep += Time.deltaTime;
             if (timestep > timeToDestroy)
             {
-                OnDestroy();
+                DisposeEntity();
                 timestep = 0;
             }
         }

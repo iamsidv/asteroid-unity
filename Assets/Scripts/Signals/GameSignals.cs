@@ -19,4 +19,12 @@
     public class UpdatePlayerLivesSignal : Signal<int>
     {
     }
+
+    public class PlayerDiedSignal : Signal
+    {
+    }
+
+    public class PlayerReviveSignal : Signal
+    {
+    }
 }

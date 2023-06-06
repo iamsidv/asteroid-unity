@@ -1,5 +1,6 @@
 using Asteroids.Game.Signals;
 using Asteroids.Game.UI;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class MainManager : MonoBehaviour
     [SerializeField] private float newGameStartDelay = 2f;
 
     private int currentScore = 0;
+    public int totalLives = 3;
 
     private void Start()
     {
@@ -28,12 +30,15 @@ public class MainManager : MonoBehaviour
     {
         SignalService.Subscribe<UpdateScoreSignal>(AddScore);
         SignalService.Subscribe<GameStateUpdateSignal>(SetGameState);
+        SignalService.Subscribe<PlayerDiedSignal>(PlayerDeathSignal);
     }
 
     private void OnDisable()
     {
         SignalService.RemoveSignal<UpdateScoreSignal>(AddScore);
         SignalService.RemoveSignal<GameStateUpdateSignal>(SetGameState);
+        SignalService.Subscribe<PlayerDiedSignal>(PlayerDeathSignal);
+
     }
 
     public void SetGameState(GameStateUpdateSignal signal)
@@ -69,6 +74,7 @@ public class MainManager : MonoBehaviour
     private void StartGame()
     {
         currentScore = 0;
+        totalLives = 3;
         MenuManager.HideMenu<MainMenuView>();
         var menu = MenuManager.ShowMenu<GameplayView>();
         menu.DisplayScore(currentScore);
@@ -95,5 +101,23 @@ public class MainManager : MonoBehaviour
     {
         currentScore += signal.Value;
         SignalService.Publish(new DisplayScoreSignal { Value = currentScore });
+    }
+
+    private void PlayerDeathSignal(PlayerDiedSignal signal)
+    {
+        totalLives -= 1;
+
+        if (totalLives <= 0)
+        {
+            totalLives = 0;
+            SignalService.Publish(new GameStateUpdateSignal { Value = GameState.GameOver});
+        }
+        else
+        {
+            SignalService.Publish<PlayerReviveSignal>();
+
+        }
+
+        SignalService.Publish(new UpdatePlayerLivesSignal { Value = totalLives });
     }
 }

@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1198693859695403593}
   - component: {fileID: 1198693859695403592}
-  - component: {fileID: 1198693859695403595}
-  - component: {fileID: 1198693859695403594}
   - component: {fileID: 1198693859695403596}
+  - component: {fileID: 5468635410565998594}
   m_Layer: 7
   m_Name: pf_ufo_2
   m_TagString: Saucer
@@ -85,58 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1198693859695403595
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198693859695403607}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.08044857, y: -0.31584868}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.864, y: 1.136}
-    newSize: {x: 1.864, y: 1.136}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.6748463, y: 0.47553238}
-  m_EdgeRadius: 0
---- !u!61 &1198693859695403594
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198693859695403607}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.03738737, y: 0.24102917}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.864, y: 1.136}
-    newSize: {x: 1.864, y: 1.136}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.81753635, y: 0.64685494}
-  m_EdgeRadius: 0
 --- !u!114 &1198693859695403596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,3 +100,19 @@ MonoBehaviour:
   shootDelay: 2
   updateDirectionDelay: 3.5
   bulletEntity: {fileID: 0}
+--- !u!58 &5468635410565998594
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198693859695403607}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6

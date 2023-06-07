@@ -108,6 +108,5 @@ namespace Asteroids.Game.Runtime
             shipCollider2D.enabled = true;
             SetDirection(new Vector3(0, 1));
         }
-
     }
 }

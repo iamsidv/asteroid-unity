@@ -1,6 +1,4 @@
-﻿using Asteroids.Game.Core;
-using Asteroids.Game.Signals;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Asteroids.Game.Core
 {

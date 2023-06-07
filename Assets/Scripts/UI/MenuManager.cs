@@ -31,7 +31,6 @@ namespace Asteroids.Game.UI
             return menu as T;
         }
 
-
         public static void HideMenu<T>() where T : BaseView
         {
             var menu = GetMenu<T>();

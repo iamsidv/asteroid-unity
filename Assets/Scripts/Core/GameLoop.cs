@@ -5,52 +5,52 @@ namespace Asteroids.Game.Core
 {
     public class GameLoop : IGame
     {
-        private List<IGameEntity> gameEntities;
-        private Vector3 bottomLeftPoint;
-        private Vector3 topRightPoint;
+        private List<IGameEntity> _gameEntities;
+        private Vector3 _bottomLeftPoint;
+        private Vector3 _topRightPoint;
 
         public GameLoop()
         {
-            gameEntities = new List<IGameEntity>();
+            _gameEntities = new List<IGameEntity>();
             SetCameraBounds();
         }
 
         private void SetCameraBounds()
         {
             var cameraZ = Camera.main.transform.position.z;
-            bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
-            topRightPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
+            _bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
+            _topRightPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
         }
 
         public void AddGameEntity(IGameEntity gameEntity)
         {
-            gameEntities.Add(gameEntity);
+            _gameEntities.Add(gameEntity);
         }
 
         public void OnStateChanged(IGameState state)
         {
             state?.Execute();
 
-            foreach (var item in gameEntities)
+            foreach (var item in _gameEntities)
             {
                 GameObject.Destroy(item.GameObject);
             }
-            gameEntities.Clear();
+            _gameEntities.Clear();
         }
 
         public void RemoveGameEntity(IGameEntity gameEntity)
         {
-            if (gameEntities.Contains(gameEntity))
+            if (_gameEntities.Contains(gameEntity))
             {
-                gameEntities.Remove(gameEntity);
+                _gameEntities.Remove(gameEntity);
             }
         }
 
         public void UpdateGame()
         {
-            for (int i = 0; i < gameEntities?.Count; i++)
+            for (int i = 0; i < _gameEntities?.Count; i++)
             {
-                var entity = gameEntities[i];
+                var entity = _gameEntities[i];
                 entity.EntityUpdate();
                 HandleScreenWarp(entity.GameObject.transform, Vector3.zero);
             }
@@ -58,9 +58,9 @@ namespace Asteroids.Game.Core
 
         public void OnFixedUpdate()
         {
-            for (int i = 0; i < gameEntities?.Count; i++)
+            for (int i = 0; i < _gameEntities?.Count; i++)
             {
-                gameEntities[i].EntityFixedUpdate();
+                _gameEntities[i].EntityFixedUpdate();
             }
         }
 
@@ -71,22 +71,22 @@ namespace Asteroids.Game.Core
                 var pos = target.position;
                 var offset = target.localScale * 0.5f;
 
-                if (pos.x < bottomLeftPoint.x - offset.x)
+                if (pos.x < _bottomLeftPoint.x - offset.x)
                 {
-                    pos.x = topRightPoint.x + offset.x;
+                    pos.x = _topRightPoint.x + offset.x;
                 }
-                else if (pos.x > topRightPoint.x + offset.x)
+                else if (pos.x > _topRightPoint.x + offset.x)
                 {
-                    pos.x = bottomLeftPoint.x - offset.x;
+                    pos.x = _bottomLeftPoint.x - offset.x;
                 }
 
-                if (pos.y < bottomLeftPoint.y - offset.y)
+                if (pos.y < _bottomLeftPoint.y - offset.y)
                 {
-                    pos.y = topRightPoint.y + offset.y;
+                    pos.y = _topRightPoint.y + offset.y;
                 }
-                else if (pos.y > topRightPoint.y + offset.y)
+                else if (pos.y > _topRightPoint.y + offset.y)
                 {
-                    pos.y = bottomLeftPoint.y - offset.y;
+                    pos.y = _bottomLeftPoint.y - offset.y;
                 }
 
                 target.position = pos;

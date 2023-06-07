@@ -1,5 +1,4 @@
 using Asteroids.Game.Signals;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +11,6 @@ namespace Asteroids.Game.UI
         [SerializeField] private TextMeshProUGUI titleLabel;
         [SerializeField] private GameObject stubChances;
         [SerializeField] private Image chanceImage;
-
         [SerializeField] private Image[] totalChances;
 
         public override void OnScreenEnter()
@@ -35,7 +33,6 @@ namespace Asteroids.Game.UI
 
             SignalService.RemoveSignal<DisplayScoreSignal>(OnScoreUpdated);
             SignalService.RemoveSignal<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
-
 
             Clear();
         }

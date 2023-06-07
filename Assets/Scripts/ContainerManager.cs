@@ -7,16 +7,16 @@ namespace Asteroids.Game.Runtime
 {
     public class ContainerManager : MonoBehaviour
     {
-        private IGame game;
-        private static ContainerManager instance;
-        public GameState gameState;
+        private IGame _game;
+        private static ContainerManager _instance;
+        public GameState _gameState;
 
         private void Awake()
         {
-            if (instance == null)
-                instance = this;
+            if (_instance == null)
+                _instance = this;
 
-            game = new GameLoop();
+            _game = new GameLoop();
         }
 
         private void OnEnable()
@@ -26,11 +26,11 @@ namespace Asteroids.Game.Runtime
 
         private void SetGameState(GameStateUpdateSignal signal)
         {
-            gameState = signal.Value;
+            _gameState = signal.Value;
 
-            if(gameState == GameState.GameOver)
+            if(_gameState == GameState.GameOver)
             {
-                game.OnStateChanged(null);
+                _game.OnStateChanged(null);
             }
         }
 
@@ -41,13 +41,13 @@ namespace Asteroids.Game.Runtime
 
         public static void AddEntity(IGameEntity entity)
         {
-            if (instance == null)
+            if (_instance == null)
             {
                 Debug.Log("Cannot Add Entity as Container Instance is empty");
                 return;
             }
 
-            if (instance.game == null)
+            if (_instance._game == null)
             {
                 Debug.Log("Cannot Add Entity as Game is not created");
                 return;
@@ -55,42 +55,42 @@ namespace Asteroids.Game.Runtime
 
             entity.EntityStart();
 
-            instance.game.AddGameEntity(entity);
+            _instance._game.AddGameEntity(entity);
         }
 
         public static void RemoveEntity(IGameEntity entity)
         {
-            if (instance == null)
+            if (_instance == null)
             {
                 Debug.Log("Cannot Add Entity as Container Instance is empty");
                 return;
             }
 
-            if (instance.game == null)
+            if (_instance._game == null)
             {
                 Debug.Log("Cannot Add Entity as Game is not created");
                 return;
             }
 
-            instance.game.RemoveGameEntity(entity);
+            _instance._game.RemoveGameEntity(entity);
         }
 
         private void Update()
         {
-            if (gameState != GameState.Running)
+            if (_gameState != GameState.Running)
                 return;
 
-            if (instance.game != null)
-                instance.game.UpdateGame();
+            if (_instance._game != null)
+                _instance._game.UpdateGame();
         }
 
         private void FixedUpdate()
         {
-            if (gameState != GameState.Running)
+            if (_gameState != GameState.Running)
                 return;
 
-            if (instance.game != null)
-                instance.game.OnFixedUpdate();
+            if (_instance._game != null)
+                _instance._game.OnFixedUpdate();
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Asteroids.Game.Signals
 {
-
     public delegate void SignalCallback<T>(T signal);
 
     public class SignalService

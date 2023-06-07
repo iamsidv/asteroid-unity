@@ -18,15 +18,15 @@ namespace Asteroids.Game.Runtime
         private float _currentTime;
         private bool _isReviving;
 
-        public override void Initialize()
+        public override void EntityStart()
         {
-            base.Initialize();
+            base.EntityStart();
 
             SetDirection(new Vector2(0, 1));
             _currentTime = 0;
         }
 
-        public override void UpdateEntity()
+        public override void EntityUpdate()
         {
             if (_isReviving)
                 return;
@@ -50,7 +50,7 @@ namespace Asteroids.Game.Runtime
             }
         }
 
-        public override void FixedUpdateEntity()
+        public override void EntityFixedUpdate()
         {
             if (_isReviving)
                 return;

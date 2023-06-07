@@ -51,7 +51,7 @@ namespace Asteroids.Game.Core
             for (int i = 0; i < gameEntities?.Count; i++)
             {
                 var entity = gameEntities[i];
-                entity.UpdateEntity();
+                entity.EntityUpdate();
                 HandleScreenWarp(entity.GameObject.transform, Vector3.zero);
             }
         }
@@ -60,7 +60,7 @@ namespace Asteroids.Game.Core
         {
             for (int i = 0; i < gameEntities?.Count; i++)
             {
-                gameEntities[i].FixedUpdateEntity();
+                gameEntities[i].EntityFixedUpdate();
             }
         }
 

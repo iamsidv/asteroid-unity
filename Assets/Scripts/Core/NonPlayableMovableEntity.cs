@@ -1,4 +1,5 @@
 ﻿using Asteroids.Game.Core;
+using Asteroids.Game.Signals;
 using UnityEngine;
 
 namespace Asteroids.Game.Core
@@ -7,15 +8,20 @@ namespace Asteroids.Game.Core
     {
         [SerializeField] private float speed = 4f;
 
-        public override void Initialize()
+        public override void EntityStart()
         {
-            base.Initialize();
+            base.EntityStart();
             SetDirection(Random.insideUnitCircle.normalized);
         }
 
-        public override void UpdateEntity()
+        public override void EntityUpdate()
         {
             transform.position += speed * Time.deltaTime * MoveDirection;
+        }
+
+        public override void DisposeEntity()
+        {
+            base.DisposeEntity();
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Asteroids.Game.Runtime
         private float directionTimeStep;
 
 
-        public override void UpdateEntity()
+        public override void EntityUpdate()
         {
-            base.UpdateEntity();
+            base.EntityUpdate();
 
             if (Time.time - timeStep > shootDelay)
             {

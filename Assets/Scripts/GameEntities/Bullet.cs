@@ -1,4 +1,5 @@
 using Asteroids.Game.Core;
+using Asteroids.Game.Signals;
 using UnityEngine;
 
 namespace Asteroids.Game.Runtime
@@ -9,19 +10,24 @@ namespace Asteroids.Game.Runtime
         public float timeToDestroy = 4f;
         public float timestep;
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Asteroid"))
             {
                 var entity = collision.gameObject.GetComponent<GameEntity>();
                 if (entity != null)
+                {
+                    if (this.gameObject.CompareTag("PlayerBullet"))
+                    {
+                        SignalService.Publish(new UpdateScoreSignal { Value = entity.Score });
+                    }
                     entity.DisposeEntity();
-
+                }
                 DisposeEntity();
             }
         }
 
-        public override void UpdateEntity()
+        public override void EntityUpdate()
         {
             transform.position += speed * Time.deltaTime * MoveDirection;
 

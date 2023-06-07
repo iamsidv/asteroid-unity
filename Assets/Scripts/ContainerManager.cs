@@ -53,7 +53,7 @@ namespace Asteroids.Game.Runtime
                 return;
             }
 
-            entity.Initialize();
+            entity.EntityStart();
 
             instance.game.AddGameEntity(entity);
         }

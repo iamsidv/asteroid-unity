@@ -71,8 +71,10 @@ public class PrefabHolder : MonoBehaviour
 
     public IGameEntity InstantiateEntity(string entityId, Vector2 position)
     {
-        var entity = gameplayElements.First(t => t.id.Equals(entityId)).prefab;
-        return InstantiateEntity(entity, position);
+        var gameplayElement = gameplayElements.First(t => t.id.Equals(entityId));
+        var entity = InstantiateEntity(gameplayElement.prefab, position);
+        entity.OnInitialize(gameplayElement.score);
+        return entity;
     }
 
     public IGameEntity InstantiateEntity(IGameEntity entity, Vector2 position)

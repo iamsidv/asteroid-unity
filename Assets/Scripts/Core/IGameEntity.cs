@@ -3,13 +3,13 @@ namespace Asteroids.Game.Core
     public interface IGameEntity
     {
         void SetDirection(UnityEngine.Vector2 direction);
-        void Initialize();
-        void UpdateEntity();
+        void OnInitialize(int score);
+        void EntityStart();
+        void EntityUpdate();
+        void EntityFixedUpdate();
         void DisposeEntity();
         void SetVisibility(bool isVisible);
         UnityEngine.GameObject GameObject { get; }
-
-        void FixedUpdateEntity();
     }
 
     public interface IGame

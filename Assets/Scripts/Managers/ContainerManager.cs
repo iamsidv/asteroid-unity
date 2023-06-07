@@ -15,13 +15,18 @@ namespace Asteroids.Game.Management
         {
             if (_instance == null)
                 _instance = this;
-
-            _game = new GameLoop();
         }
 
         private void OnEnable()
         {
             SignalService.Subscribe<GameStateUpdateSignal>(SetGameState);
+            SignalService.Subscribe<GameConfigLoadedSignal>(OnGameConfigLoaded);
+        }
+
+
+        private void OnGameConfigLoaded(GameConfigLoadedSignal signal)
+        {
+            _game = new GameLoop(signal.Value);
         }
 
         private void SetGameState(GameStateUpdateSignal signal)
@@ -37,6 +42,7 @@ namespace Asteroids.Game.Management
         private void OnDisable()
         {
             SignalService.RemoveSignal<GameStateUpdateSignal>(SetGameState);
+            SignalService.RemoveSignal<GameConfigLoadedSignal>(OnGameConfigLoaded);
         }
 
         public static void AddEntity(IGameEntity entity)

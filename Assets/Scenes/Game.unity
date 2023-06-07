@@ -1470,7 +1470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5f37a56d87ad74fb970a5b612fb182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLives: 5
   gameplayElements:
   - id: ast_1
     prefab: {fileID: 2716643214475083036, guid: 3b762817614ea8f4aad744a0a1c9c059, type: 3}
@@ -1533,6 +1532,7 @@ MonoBehaviour:
   waveEnemiesCount: 0
   timeStep: 0
   playerShip: {fileID: 7767839191421292602, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}
+  config: {fileID: 11400000, guid: bee6fb63e0d029d40a0a1349a3dc7256, type: 2}
 --- !u!4 &1861309753
 Transform:
   m_ObjectHideFlags: 0

@@ -84,9 +84,10 @@ public class MainManager : MonoBehaviour
     private void ShowGameOverScreen()
     {
         MenuManager.HideMenu<MainMenuView>();
-        var menu = MenuManager.ShowMenu<GameplayView>();
+        var menu = MenuManager.GetMenu<GameplayView>();
         menu.DisplayScore(currentScore);
         menu.SetTitle("Gameover");
+        menu.Clear();
 
         StartCoroutine(DelayedCall(newGameStartDelay));
     }
@@ -114,10 +115,10 @@ public class MainManager : MonoBehaviour
         }
         else
         {
+            SignalService.Publish(new UpdatePlayerLivesSignal { Value = totalLives });
             SignalService.Publish<PlayerReviveSignal>();
-
         }
 
-        SignalService.Publish(new UpdatePlayerLivesSignal { Value = totalLives });
+        
     }
 }

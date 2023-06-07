@@ -29,7 +29,13 @@ namespace Asteroids.Game.Core
 
         public void OnStateChanged(IGameState state)
         {
-            state.Execute();
+            state?.Execute();
+
+            foreach (var item in gameEntities)
+            {
+                GameObject.Destroy(item.GameObject);
+            }
+            gameEntities.Clear();
         }
 
         public void RemoveGameEntity(IGameEntity gameEntity)

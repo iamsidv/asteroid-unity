@@ -19,20 +19,22 @@ namespace Asteroids.Game.UI
 
         public static T ShowMenu<T>() where T : BaseView
         {
-            var type = typeof(T);
-
-            var menu = _instance.views.Find(t => t.GetType().Equals(type));
+            var menu = GetMenu<T>();
             menu.SetVisibility(true);
             menu.OnScreenEnter();
+            return menu;
+        }
 
+        public static T GetMenu<T>() where T : BaseView
+        {
+            var menu = _instance.views.Find(t => t.GetType().Equals(typeof(T)));
             return menu as T;
         }
 
+
         public static void HideMenu<T>() where T : BaseView
         {
-            var type = typeof(T);
-
-            var menu = _instance.views.Find(t => t.GetType().Equals(type));
+            var menu = GetMenu<T>();
             menu.OnScreenExit();
             menu.SetVisibility(false);
         }

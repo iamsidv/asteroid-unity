@@ -68,10 +68,10 @@ namespace Asteroids.Game.Runtime
                 return;
 
             Debug.Log(collision.gameObject.tag);
-            gameObject.SetActive(false);
+
             SignalService.Publish<PlayerDiedSignal>();
             shipCollider2D.enabled = false;
-
+            renderer2D.enabled = false;
             _isReviving = true;
         }
 
@@ -91,7 +91,7 @@ namespace Asteroids.Game.Runtime
             transform.rotation = Quaternion.identity;
             shipRigidbody2D.velocity = Vector3.zero;
 
-            gameObject.SetActive(true);
+            renderer2D.enabled = true;
             StartCoroutine(PlayReviveSequence());
         }
 
@@ -99,12 +99,14 @@ namespace Asteroids.Game.Runtime
         {
             for (int i = 0; i < 10; i++)
             {
-                gameObject.SetActive(i % 2 == 0);
-                yield return null;
+                renderer2D.enabled = (i % 2 == 0);
+                yield return new WaitForSeconds(0.1f);
             }
-            gameObject.SetActive(true);
-            yield return null;
+            renderer2D.enabled = true;
+            yield return new WaitForSeconds(0.5f);
             _isReviving = false;
+            shipCollider2D.enabled = true;
+            SetDirection(new Vector3(0, 1));
         }
 
     }

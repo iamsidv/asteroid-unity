@@ -13,7 +13,7 @@ namespace Asteroids.Game.UI
         [SerializeField] private GameObject stubChances;
         [SerializeField] private Image chanceImage;
 
-        private Image[] totalChances;
+        [SerializeField] private Image[] totalChances;
 
         public override void OnScreenEnter()
         {
@@ -37,11 +37,7 @@ namespace Asteroids.Game.UI
             SignalService.RemoveSignal<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
 
 
-            for (int i = 0; i < totalChances?.Length; i++)
-            {
-                Destroy(totalChances[i].gameObject);
-            }
-            totalChances = null;
+            Clear();
         }
 
         public void DisplayScore(int currentScore)
@@ -58,9 +54,21 @@ namespace Asteroids.Game.UI
 
         private void OnPlayerLifeChanged(UpdatePlayerLivesSignal signal)
         {
-            for (int i = totalChances.Length-1; i >= signal.Value; i--)
+            for (int i = totalChances.Length - 1; i >= signal.Value; i--)
             {
                 totalChances[i].gameObject.SetActive(false);
+            }
+        }
+
+        public void Clear()
+        {
+            if (totalChances != null)
+            {
+                for (int i = 0; i < totalChances.Length; i++)
+                {
+                    Destroy(totalChances[i].gameObject);
+                }
+                totalChances = null;
             }
         }
     }

@@ -19,6 +19,8 @@ public class PrefabHolder : MonoBehaviour
     public int waveEnemiesCount;
     public float timeStep;
 
+    public GameObject playerShip;
+
     private void Awake()
     {
         instance = this;

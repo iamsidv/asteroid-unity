@@ -27,6 +27,11 @@ namespace Asteroids.Game.Runtime
         private void SetGameState(GameStateUpdateSignal signal)
         {
             gameState = signal.Value;
+
+            if(gameState == GameState.GameOver)
+            {
+                game.OnStateChanged(null);
+            }
         }
 
         private void OnDisable()

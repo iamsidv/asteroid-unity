@@ -100,6 +100,8 @@ MonoBehaviour:
   maxThrust: 6.5
   rotateSpeed: 180
   shipRigidbody2D: {fileID: 7767839191421292598}
+  shipCollider2D: {fileID: 8574700282501232183}
+  renderer2D: {fileID: 7767839191421292597}
   bullet: {fileID: 0}
   nextBulletSpawnTime: 0.2
 --- !u!50 &7767839191421292598

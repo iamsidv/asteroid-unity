@@ -8,7 +8,6 @@ public class PrefabHolder : MonoBehaviour
 {
     public static PrefabHolder instance;
 
-    public int totalLives = 5;
     public GameplayElement[] gameplayElements;
     public GameEntity playerBullet;
     public GameEntity enemyBullet;

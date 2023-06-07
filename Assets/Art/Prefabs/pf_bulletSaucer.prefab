@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 359312428152593137}
   - component: {fileID: 359312428152593138}
   - component: {fileID: 359312428152593139}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pf_bulletSaucer
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}

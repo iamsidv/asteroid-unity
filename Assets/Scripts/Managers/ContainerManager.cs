@@ -3,7 +3,7 @@ using Asteroids.Game.Signals;
 using System;
 using UnityEngine;
 
-namespace Asteroids.Game.Runtime
+namespace Asteroids.Game.Management
 {
     public class ContainerManager : MonoBehaviour
     {

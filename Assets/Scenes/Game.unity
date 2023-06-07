@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee6219ac9e0dc4cbf390703a397063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
+  _gameState: 0
 --- !u!4 &390012075
 Transform:
   m_ObjectHideFlags: 0
@@ -1532,6 +1532,7 @@ MonoBehaviour:
   currentWave: 0
   waveEnemiesCount: 0
   timeStep: 0
+  playerShip: {fileID: 7767839191421292602, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}
 --- !u!4 &1861309753
 Transform:
   m_ObjectHideFlags: 0
@@ -1734,6 +1735,10 @@ PrefabInstance:
     - target: {fileID: 7767839191421292602, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}
       propertyPath: m_Name
       value: pf_playerShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767839191421292602, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}

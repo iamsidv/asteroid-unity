@@ -77,6 +77,11 @@ public class PrefabHolder : MonoBehaviour
         return entity;
     }
 
+    public void SpawnPlayerShip()
+    {
+        Instantiate(playerShip, Vector3.zero, Quaternion.identity);
+    }
+
     public IGameEntity InstantiateEntity(IGameEntity entity, Vector2 position)
     {
         var obj = Instantiate(entity as GameEntity, position, Quaternion.identity);

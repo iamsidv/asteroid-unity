@@ -67,8 +67,6 @@ namespace Asteroids.Game.Runtime
             if (_isReviving)
                 return;
 
-            Debug.Log(collision.gameObject.tag);
-
             SignalService.Publish<PlayerDiedSignal>();
             shipCollider2D.enabled = false;
             renderer2D.enabled = false;

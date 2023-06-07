@@ -69,6 +69,8 @@ public class MainManager : MonoBehaviour
         MenuManager.ShowMenu<MainMenuView>();
         MenuManager.HideMenu<GameplayView>();
         gameState = CurrentGameState = GameState.Ready;
+
+        PrefabHolder.instance.SpawnPlayerShip();
     }
 
     private void StartGame()

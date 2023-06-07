@@ -166,7 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadc9491ed3d81d4397a2722a9468e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assetPath: cfg_gameConfig.asset
+  _gameConfigRef:
+    m_AssetGUID: bee6fb63e0d029d40a0a1349a3dc7256
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1 &390012073
 GameObject:
   m_ObjectHideFlags: 0

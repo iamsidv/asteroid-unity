@@ -260,7 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: 0
   newGameStartDelay: 2
-  totalLives: 3
 --- !u!1 &886374591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,10 +1460,10 @@ RectTransform:
   m_Father: {fileID: 1582471037}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -740, y: 449}
-  m_SizeDelta: {x: 398.94, y: 134.056}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247, y: -91}
+  m_SizeDelta: {x: 398.94, y: 134.05603}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772254332
 MonoBehaviour:
@@ -1655,11 +1654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5f37a56d87ad74fb970a5b612fb182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configReference:
-    m_AssetGUID: bee6fb63e0d029d40a0a1349a3dc7256
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
 --- !u!4 &1861309753
 Transform:
   m_ObjectHideFlags: 0

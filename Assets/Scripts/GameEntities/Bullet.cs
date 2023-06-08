@@ -27,7 +27,7 @@ namespace Asteroids.Game.Runtime
                 {
                     if (_canUpdateScore)
                     {
-                        SignalService.Publish(new UpdateScoreSignal { Value = entity.DieScore });
+                        _signalService.Publish(new UpdateScoreSignal { Value = entity.DieScore });
                     }
                     entity.DisposeEntity();
                 }

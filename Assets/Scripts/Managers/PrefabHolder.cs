@@ -3,6 +3,7 @@ using Asteroids.Game.Core;
 using Asteroids.Game.Signals;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Asteroids.Game.Management
 {
@@ -10,6 +11,12 @@ namespace Asteroids.Game.Management
     {
         public static PrefabHolder instance;
         private GameConfig _config;
+        private GameEntityFactory _entityFactory;
+
+        private ISignalService _signalService;
+
+        [Inject]
+        private void InitSignalService(ISignalService signalService) => _signalService = signalService;
 
         private void Awake()
         {
@@ -18,18 +25,18 @@ namespace Asteroids.Game.Management
 
         private void OnEnable()
         {
-            SignalService.Subscribe<GameConfigLoadedSignal>(OnGameConfigLoaded);
+            _signalService.Subscribe<GameConfigLoadedSignal>(OnGameConfigLoaded);
         }
 
         private void OnDisable()
         {
-            SignalService.RemoveSignal<GameConfigLoadedSignal>(OnGameConfigLoaded);
+            _signalService.RemoveSignal<GameConfigLoadedSignal>(OnGameConfigLoaded);
         }
 
         private void OnGameConfigLoaded(GameConfigLoadedSignal signal)
         {
             _config = signal.Value;
-            SignalService.Publish(new GameStateUpdateSignal { Value = GameState.Ready });
+            _signalService.Publish(new GameStateUpdateSignal { Value = GameState.Ready });
         }
 
         public IGameEntity InstantiatePlayerBullet(Vector2 position)

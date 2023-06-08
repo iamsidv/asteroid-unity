@@ -1,5 +1,4 @@
 using Asteroids.Game.Core;
-using Asteroids.Game.Management;
 using Asteroids.Game.Signals;
 using System.Collections;
 using UnityEngine;
@@ -44,7 +43,7 @@ namespace Asteroids.Game.Runtime
             if (Input.GetKeyDown(KeyCode.Z) && Time.time - _currentTime > nextBulletSpawnTime)
             {
                 var position = transform.TransformPoint(new Vector2(0, 0.6f));
-                var obj = PrefabHolder.instance.InstantiatePlayerBullet(position);
+                var obj = _spawnService.InstantiatePlayerBullet(position);
                 obj.SetDirection(MoveDirection);
 
                 _currentTime = Time.time;
@@ -68,7 +67,7 @@ namespace Asteroids.Game.Runtime
             if (_isReviving)
                 return;
 
-            SignalService.Publish<PlayerDiedSignal>();
+            _signalService.Publish<PlayerDiedSignal>();
             shipCollider2D.enabled = false;
             renderer2D.enabled = false;
             _isReviving = true;
@@ -76,12 +75,12 @@ namespace Asteroids.Game.Runtime
 
         private void OnEnable()
         {
-            SignalService.Subscribe<PlayerReviveSignal>(OnPlayerShipRevived);
+            _signalService.Subscribe<PlayerReviveSignal>(OnPlayerShipRevived);
         }
 
         private void OnDisable()
         {
-            SignalService.RemoveSignal<PlayerReviveSignal>(OnPlayerShipRevived);
+            _signalService.RemoveSignal<PlayerReviveSignal>(OnPlayerShipRevived);
         }
 
         private void OnPlayerShipRevived(PlayerReviveSignal signal)

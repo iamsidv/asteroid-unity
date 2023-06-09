@@ -7,11 +7,35 @@ using Asteroids.Game.Signals;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.TestTools;
 using Zenject;
 
 public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
 {
+    [UnityTest]
+    public IEnumerator UT_PlayModeLoadAddressableTest()
+    {
+        PreInstall();
+        PostInstall();
+
+        var operation = Addressables.LoadAssetAsync<GameConfig>("cfg_gameConfig.asset");
+
+        GameConfig isComplete = null;
+
+        operation.Completed += (handle) =>
+        {
+            isComplete = handle.Result;
+        };
+
+        while (isComplete == null)
+        {
+            yield return null;
+        }
+
+        NUnit.Framework.Assert.IsNotNull(isComplete);
+    }
+
     [UnityTest]
     public IEnumerator UT_TestDeductPlayerLifeOnAsteriodCollision()
     {

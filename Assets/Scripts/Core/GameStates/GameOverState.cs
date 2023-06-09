@@ -1,4 +1,5 @@
-﻿using Asteroids.Game.UI;
+﻿using Asteroids.Game.Signals;
+using Asteroids.Game.UI;
 
 namespace Asteroids.Game.Core
 {
@@ -7,6 +8,8 @@ namespace Asteroids.Game.Core
         public override void Execute()
         {
             base.Execute();
+
+            _signalService.Publish<RemoveAllGameEntitiesSignal>();
 
             MenuManager.HideMenu<MainMenuView>();
             var menu = MenuManager.GetMenu<GameplayView>();

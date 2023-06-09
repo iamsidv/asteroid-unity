@@ -37,6 +37,12 @@ namespace Asteroids.Game.Services
         public void Initialize()
         {
             _signalService.Subscribe<GameStateUpdateSignal>(SetGameState);
+            _signalService.Subscribe<RemoveAllGameEntitiesSignal>(FlushGameEnities);
+        }
+
+        private void FlushGameEnities(RemoveAllGameEntitiesSignal signal)
+        {
+            _currentGame?.DisposeGameEntities();
         }
 
         private void SetGameState(GameStateUpdateSignal signal)
@@ -46,12 +52,6 @@ namespace Asteroids.Game.Services
             var type = _stateMapping[_currentGameState];
             var state = _gameStates.Find(t => t.GetType().Equals(type));
             state.Execute();
-
-            //Exceptional Case, could also use another signal to dispose game entities!
-            if (_currentGameState == GameState.GameOver)
-            {
-                _currentGame?.DisposeGameEntities();
-            }
         }
 
         public void Tick()
@@ -99,6 +99,7 @@ namespace Asteroids.Game.Services
         public void LateDispose()
         {
             _signalService.RemoveSignal<GameStateUpdateSignal>(SetGameState);
+            _signalService.RemoveSignal<RemoveAllGameEntitiesSignal>(FlushGameEnities);
         }
     }
 }

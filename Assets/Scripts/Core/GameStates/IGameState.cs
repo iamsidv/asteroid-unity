@@ -1,5 +1,6 @@
 ﻿using Asteroids.Game.Config;
 using Asteroids.Game.Services;
+using Asteroids.Game.Signals;
 using Zenject;
 
 namespace Asteroids.Game.Core
@@ -13,13 +14,16 @@ namespace Asteroids.Game.Core
     {
         private IConfigCollectionService _configService;
         protected IPlayerProfileService _playerProfileService;
+        protected ISignalService _signalService;
 
         [Inject]
-        private void InitService(IConfigCollectionService configService, 
-            IPlayerProfileService playerProfileService)
+        private void InitService(IConfigCollectionService configService,
+            IPlayerProfileService playerProfileService,
+            ISignalService signalService)
         {
             _configService = configService;
             _playerProfileService = playerProfileService;
+            _signalService = signalService;
         }
 
         protected GameConfig GameConfig => _configService.GameConfig;

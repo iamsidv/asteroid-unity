@@ -51,7 +51,7 @@ public class PlayModeTestScript
     [UnityTest]
     public IEnumerator UT_TestDeductPlayerLifeOnAsteriodCollision()
     {
-        mockEnvironment.GetComponentInChildren<MainManager>().SetTotalLives(gameConfig.TotalLives);
+        mockEnvironment.GetComponentInChildren<MainManager>().MockSetTotalLives(gameConfig.TotalLives);
 
         var ship = MonoBehaviour.Instantiate(gameConfig.PlayerShip);
         var asteriod = MonoBehaviour.Instantiate(gameConfig.GameElements[0].Prefab);
@@ -70,7 +70,7 @@ public class PlayModeTestScript
     [UnityTest]
     public IEnumerator UT_TestDeductPlayerLifeOnSaucerCollision()
     {
-        mockEnvironment.GetComponentInChildren<MainManager>().SetTotalLives(gameConfig.TotalLives);
+        mockEnvironment.GetComponentInChildren<MainManager>().MockSetTotalLives(gameConfig.TotalLives);
 
         var ship = MonoBehaviour.Instantiate(gameConfig.PlayerShip);
         var saucer = MonoBehaviour.Instantiate(gameConfig.GameElements[3].Prefab);
@@ -90,7 +90,7 @@ public class PlayModeTestScript
     [UnityTest]
     public IEnumerator UT_TestDeductPlayerLifeOnEnemyProjectileCollision()
     {
-        mockEnvironment.GetComponentInChildren<MainManager>().SetTotalLives(gameConfig.TotalLives);
+        mockEnvironment.GetComponentInChildren<MainManager>().MockSetTotalLives(gameConfig.TotalLives);
 
         var ship = MonoBehaviour.Instantiate(gameConfig.PlayerShip);
         var projectile = MonoBehaviour.Instantiate(gameConfig.EnemyProjectile);
@@ -107,7 +107,7 @@ public class PlayModeTestScript
     [UnityTest]
     public IEnumerator UT_TestGameOverOnAllLivesLost()
     {
-        mockEnvironment.GetComponentInChildren<MainManager>().SetTotalLives(1);
+        mockEnvironment.GetComponentInChildren<MainManager>().MockSetTotalLives(1);
 
         var ship = MonoBehaviour.Instantiate(gameConfig.PlayerShip);
         var projectile = MonoBehaviour.Instantiate(gameConfig.EnemyProjectile);
@@ -118,6 +118,6 @@ public class PlayModeTestScript
         yield return null;
 
         Object.Destroy(ship);
-        Assert.AreEqual(MainManager.CurrentGameState, GameState.GameOver);
+        Assert.AreEqual(MainManager.MockGameState, GameState.GameOver);
     }
 }

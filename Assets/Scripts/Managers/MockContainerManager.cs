@@ -1,22 +1,23 @@
 using Asteroids.Game.Core;
 using Asteroids.Game.Signals;
-using System;
 using UnityEngine;
 using Zenject;
 
 namespace Asteroids.Game.Management
 {
-    public class ContainerManager : MonoBehaviour
+    public class MockContainerManager : MonoBehaviour
     {
         private IGameLoop _game;
-        private static ContainerManager _instance;
+        private static MockContainerManager _instance;
         public GameState _gameState;
 
         private ISignalService _signalService;
 
         [Inject]
-        private void InitSignalService(ISignalService signalService) => _signalService = signalService;
-
+        private void InitSignalService(ISignalService signalService)
+        {
+            _signalService = signalService;
+        }
 
         private void Awake()
         {
@@ -27,29 +28,21 @@ namespace Asteroids.Game.Management
         private void OnEnable()
         {
             _signalService.Subscribe<GameStateUpdateSignal>(SetGameState);
-            _signalService.Subscribe<GameConfigLoadedSignal>(OnGameConfigLoaded);
-        }
-
-
-        private void OnGameConfigLoaded(GameConfigLoadedSignal signal)
-        {
-            //_game = new GameLoop(signal.Value);
         }
 
         private void SetGameState(GameStateUpdateSignal signal)
         {
             _gameState = signal.Value;
 
-            if(_gameState == GameState.GameOver)
+            if (_gameState == GameState.GameOver)
             {
-                _game?.OnStateChanged(null);
+                _game?.DisposeGameEntities();
             }
         }
 
         private void OnDisable()
         {
             _signalService.RemoveSignal<GameStateUpdateSignal>(SetGameState);
-            _signalService.RemoveSignal<GameConfigLoadedSignal>(OnGameConfigLoaded);
         }
 
         public static void AddEntity(IGameEntity entity)

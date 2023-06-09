@@ -1,7 +1,5 @@
 using Asteroids.Game.Core;
-using Asteroids.Game.Management;
 using UnityEngine;
-using Zenject;
 
 namespace Asteroids.Game.Runtime
 {
@@ -16,7 +14,6 @@ namespace Asteroids.Game.Runtime
 
         [SerializeField] private AsteroidSize sizeType;
         [SerializeField] private string[] spawnOnDestroyIds;
-        
 
         public override void DisposeEntity()
         {

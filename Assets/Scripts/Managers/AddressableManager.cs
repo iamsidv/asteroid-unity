@@ -17,7 +17,7 @@ namespace Asteroids.Game.Management
         private IConfigCollectionService _configService;
 
         [Inject]
-        private void Init(ISignalService signalService,
+        private void InitServices(ISignalService signalService,
             IAssetProvider assetProvider,
             IConfigCollectionService game)
         {

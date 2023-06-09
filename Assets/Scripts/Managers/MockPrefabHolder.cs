@@ -7,16 +7,17 @@ using Zenject;
 
 namespace Asteroids.Game.Management
 {
-    public class PrefabHolder : MonoBehaviour
+    public class MockPrefabHolder : MonoBehaviour
     {
-        public static PrefabHolder instance;
+        public static MockPrefabHolder instance;
         private GameConfig _config;
-        private GameEntityFactory _entityFactory;
-
         private ISignalService _signalService;
 
         [Inject]
-        private void InitSignalService(ISignalService signalService) => _signalService = signalService;
+        private void InitSignalService(ISignalService signalService)
+        {
+            _signalService = signalService;
+        }
 
         private void Awake()
         {

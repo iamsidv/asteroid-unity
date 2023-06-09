@@ -22,23 +22,15 @@ namespace Asteroids.Game.Config
     }
 
     [System.Serializable]
-    public class PrefabElement
+    public class GameplayElement
     {
         [SerializeField] private string id;
         [SerializeField] private GameEntity prefab;
+        [SerializeField] private int score;
 
         public string Id => id;
         public GameEntity Prefab => prefab;
-    }
-
-    [System.Serializable]
-    public class GameplayElement : PrefabElement
-    {
-        [SerializeField] private int score;
-        [SerializeField] private string[] spawnOnDestroy;
-
         public int Score => score;
-        public string[] SpawnOnDestroy => spawnOnDestroy;
     }
 
     [System.Serializable]

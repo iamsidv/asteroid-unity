@@ -17,27 +17,18 @@ MonoBehaviour:
   - id: ast_1
     prefab: {fileID: 2716643214475083036, guid: 3b762817614ea8f4aad744a0a1c9c059, type: 3}
     score: 20
-    spawnOnDestroy:
-    - ast_2
-    - ast_2
   - id: ast_2
     prefab: {fileID: 7122012283505314297, guid: 6900319bd6988ed4fa91cbd34ae549e1, type: 3}
     score: 50
-    spawnOnDestroy:
-    - ast_3
-    - ast_3
   - id: ast_3
     prefab: {fileID: 7872655585811822579, guid: 0614bb7f3bacec340b4fab432ac206aa, type: 3}
     score: 100
-    spawnOnDestroy: []
   - id: ufo_1
     prefab: {fileID: 4221898494123077931, guid: 1699a5c594cb5ee4db06d6c30ffb0b1c, type: 3}
     score: 150
-    spawnOnDestroy: []
   - id: ufo_2
     prefab: {fileID: 1198693859695403596, guid: a6f50f6390b3e5e409ecca1735f73d31, type: 3}
     score: 250
-    spawnOnDestroy: []
   playerProjectile: {fileID: 508440736845141110, guid: 2b2d72736ddfc0c4994c7aff816536ca, type: 3}
   enemyProjectile: {fileID: 359312428152593138, guid: fe182ec1d8bb1f84abf171da1809131c, type: 3}
   playerShip: {fileID: 7767839191421292602, guid: 0720b97a20746ba4ca30dd903eccd794, type: 3}

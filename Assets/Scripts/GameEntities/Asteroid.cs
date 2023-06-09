@@ -23,29 +23,10 @@ namespace Asteroids.Game.Runtime
 
         private void SplitEntity()
         {
-            switch (sizeType)
+            for (int i = 0; i < spawnOnDestroyIds?.Length; i++)
             {
-                case AsteroidSize.Large:
-                    for (int i = 0; i < 2; i++)
-                    {
-                        _spawnService.InstantiateEntity("ast_2", transform.position);
-                    }
-
-                    break;
-
-                case AsteroidSize.Medium:
-                    for (int i = 0; i < 2; i++)
-                    {
-                        _spawnService.InstantiateEntity("ast_3", transform.position);
-                    }
-                    break;
-
-                case AsteroidSize.Small:
-
-                    break;
-
-                default:
-                    break;
+                var entity = _spawnService.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
+                entity.SetDirection(new Vector2(1, 0));
             }
         }
     }

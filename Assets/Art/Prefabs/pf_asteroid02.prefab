@@ -136,4 +136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2.4
   sizeType: 1
-  spawnOnDestroyIds: []
+  spawnOnDestroyIds:
+  - ast_3
+  - ast_3

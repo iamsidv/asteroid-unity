@@ -25,8 +25,7 @@ namespace Asteroids.Game.Runtime
         {
             for (int i = 0; i < spawnOnDestroyIds?.Length; i++)
             {
-                var entity = _spawnService.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
-                entity.SetDirection(new Vector2(1, 0));
+                _spawnService.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
             }
         }
     }

@@ -6,3 +6,4 @@ Logs/
 *.sln
 obj/
 .vs/
+.idea/

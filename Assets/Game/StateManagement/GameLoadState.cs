@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using Asteroids.Game.UI;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Game.AssetManagement;
 using Game.Configurations;
-using Game.Services;
-using Game.UI;
 using JetBrains.Annotations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 using Zenject;
 
 namespace Game.StateManagement
@@ -13,11 +12,12 @@ namespace Game.StateManagement
     public class GameLoadState : BaseGameState
     {
         private const string GameConfigAddress = "Assets/Config/GameConfig.asset";
+        private readonly List<string> _uiLabel = new() { "ui" };
 
         [Inject] private IAssetProvider _assetProvider;
-        [Inject] private GameStateManager gameStateManager;
         [Inject] private IConfigCollectionService _configCollection;
-        
+        [Inject] private GameStateManager gameStateManager;
+
         public override void Enter()
         {
             base.Enter();
@@ -28,18 +28,17 @@ namespace Game.StateManagement
         private async Task ProcessStateAsync()
         {
             await LoadGameConfig();
-            
-            var mainMenu = MenuManager.ShowMenu<MainMenuView>();
-            MenuManager.HideMenu<GameplayView>();
-            mainMenu.ToggleStartButton(false);
-            
+
+            IList<IResourceLocation> uiResourceLocations = await _assetProvider.LoadAssetLabels(_uiLabel);
+            await MenuManager.LoadMenus(uiResourceLocations);
+
             gameStateManager.SetState<GameReadyState>();
         }
-        
+
         private async Task LoadGameConfig()
         {
-           GameConfig config = await _assetProvider.LoadAssetAsync<GameConfig>(GameConfigAddress);
-           _configCollection.SetGameConfig(config);
+            GameConfig config = await _assetProvider.LoadAssetAsync<GameConfig>(GameConfigAddress);
+            _configCollection.SetGameConfig(config);
         }
     }
 }

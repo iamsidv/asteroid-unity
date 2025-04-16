@@ -1,5 +1,6 @@
 ﻿using Game.Configurations;
 using Game.PlayerState;
+using Game.UI;
 using Zenject;
 
 namespace Game.StateManagement
@@ -18,15 +19,8 @@ namespace Game.StateManagement
     public abstract class BaseGameState : IGameState
     {
         private IConfigCollectionService _configService;
+        protected MenuManager MenuManager;
         protected IPlayerProfileService PlayerProfileService;
-
-        [Inject]
-        private void InitService(IConfigCollectionService configService,
-            IPlayerProfileService playerProfileService)
-        {
-            _configService = configService;
-            PlayerProfileService = playerProfileService;
-        }
 
         protected GameConfig GameConfig => _configService.GameConfig;
 
@@ -36,6 +30,16 @@ namespace Game.StateManagement
 
         public virtual void Exit()
         {
+        }
+
+        [Inject]
+        private void InitService(IConfigCollectionService configService,
+            IPlayerProfileService playerProfileService,
+            MenuManager menuManager)
+        {
+            _configService = configService;
+            PlayerProfileService = playerProfileService;
+            MenuManager = menuManager;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Game.AssetManagement
 {
@@ -11,7 +12,7 @@ namespace Game.AssetManagement
     public class AssetProvider : IAssetProvider, IDisposable
     {
         private readonly List<AsyncOperationHandle> _operationHandles = new();
-        
+
         public void LoadAssetWithCallback<TAsset>(AssetReference assetReference, Action<TAsset> callback)
         {
             var operation = assetReference.LoadAssetAsync<TAsset>();
@@ -33,7 +34,21 @@ namespace Game.AssetManagement
             {
                 _operationHandles.Add(operation);
             }
-            
+
+            return operation.Result;
+        }
+
+        public async Task<IList<IResourceLocation>> LoadAssetLabels(IReadOnlyList<string> keys)
+        {
+            AsyncOperationHandle<IList<IResourceLocation>> operation =
+                Addressables.LoadResourceLocationsAsync(keys, Addressables.MergeMode.Union);
+            await operation.Task;
+
+            if (!_operationHandles.Contains(operation))
+            {
+                _operationHandles.Add(operation);
+            }
+
             return operation.Result;
         }
 
@@ -43,6 +58,7 @@ namespace Game.AssetManagement
             {
                 operationHandle.Release();
             }
+
             _operationHandles.Clear();
         }
     }

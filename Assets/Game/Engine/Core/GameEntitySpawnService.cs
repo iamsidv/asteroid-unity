@@ -1,11 +1,7 @@
 ﻿using System.Linq;
 using Asteroids.Game.Core;
-using Asteroids.Game.Services;
-using Asteroids.Game.Signals;
 using Game.Configurations;
 using Game.Core;
-using Game.Managers;
-using Game.Signals;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -15,10 +11,9 @@ namespace Game.Services
     [UsedImplicitly]
     public class GameEntitySpawnService
     {
-        private GameConfig _gameConfig;
-
         private IConfigCollectionService _configService;
         private GameEntity.Factory _factory;
+        private GameConfig _gameConfig;
 
         [Inject]
         private void Init(GameEntity.Factory factory,

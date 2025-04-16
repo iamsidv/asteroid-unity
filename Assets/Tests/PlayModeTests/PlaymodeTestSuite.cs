@@ -1,7 +1,5 @@
-using Asteroids.Game.Core;
-using Asteroids.Game.Services;
-using Asteroids.Game.Signals;
 using System.Collections;
+using Asteroids.Game.Core;
 using Game.AssetManagement;
 using Game.Configurations;
 using Game.Core;
@@ -10,6 +8,8 @@ using Game.Engine.Entities;
 using Game.Managers;
 using Game.PlayerState;
 using Game.Services;
+using Game.Signals;
+using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -28,17 +28,14 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
 
         GameConfig isComplete = null;
 
-        operation.Completed += (handle) =>
-        {
-            isComplete = handle.Result;
-        };
+        operation.Completed += (handle) => { isComplete = handle.Result; };
 
         while (isComplete == null)
         {
             yield return null;
         }
 
-        NUnit.Framework.Assert.IsNotNull(isComplete);
+        Assert.IsNotNull(isComplete);
     }
 
     [UnityTest]
@@ -60,7 +57,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
 
         yield return null;
 
-        NUnit.Framework.Assert.Less(profileService.GetTotalLives(), totallives);
+        Assert.Less(profileService.GetTotalLives(), totallives);
     }
 
     [UnityTest]
@@ -82,7 +79,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
 
         yield return null;
 
-        NUnit.Framework.Assert.Less(profileService.GetTotalLives(), totallives);
+        Assert.Less(profileService.GetTotalLives(), totallives);
     }
 
     [UnityTest]
@@ -104,7 +101,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
 
         yield return null;
 
-        NUnit.Framework.Assert.Less(profileService.GetTotalLives(), totallives);
+        Assert.Less(profileService.GetTotalLives(), totallives);
     }
 
     private void CommonPlayerShipInstallBindings<TComponent>(GameConfig gameConfig, GameObject mockGameObject)
@@ -120,8 +117,8 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
         Container.Bind<ShipMovement>().FromComponentInNewPrefab(gameConfig.PlayerShip).AsSingle();
         Container.Bind<TComponent>().FromComponentInNewPrefab(mockGameObject).AsSingle();
 
-        Container.BindFactory<UnityEngine.Object, GameEntity, GameEntity.Factory>()
-               .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnService>();
+        Container.BindFactory<Object, GameEntity, GameEntity.Factory>()
+            .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnService>();
 
         Container.BindInterfacesAndSelfTo<SignalService>().AsSingle();
         Container.BindInterfacesAndSelfTo<AssetProvider>().AsSingle();

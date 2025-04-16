@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Asteroids.Game.UI
+namespace Game.UI.MainMenu
 {
     public class MainMenuView : BaseView
     {

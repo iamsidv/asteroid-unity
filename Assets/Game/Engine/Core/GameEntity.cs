@@ -1,7 +1,7 @@
 using Asteroids.Game.Core;
 using Asteroids.Game.Services;
-using Asteroids.Game.Signals;
 using Game.Services;
+using Game.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -11,25 +11,14 @@ namespace Game.Core
     {
         private Vector2 _direction;
 
-        public GameObject GameObject => gameObject;
+        private IGameContainer _gameContainer;
+        protected ISignalService _signalService;
+        protected GameEntitySpawnService _spawnService;
         public int DieScore { get; private set; }
 
         protected Vector3 MoveDirection => _direction;
 
-        private IGameContainer _gameContainer;
-        protected GameEntitySpawnService _spawnService;
-        protected ISignalService _signalService;
-
-        [Inject]
-        private void InitServices(IGameContainer gameContainer,
-            GameEntitySpawnService spawnManager,
-            ISignalService signalService)
-        {
-            _gameContainer = gameContainer;
-            _spawnService = spawnManager;
-            _signalService = signalService;
-            _gameContainer.AddEntity(this);
-        }
+        public GameObject GameObject => gameObject;
 
         public virtual void EntityStart()
         {
@@ -62,12 +51,23 @@ namespace Game.Core
             DieScore = score;
         }
 
-        public class Factory : PlaceholderFactory<UnityEngine.Object, GameEntity>
+        [Inject]
+        private void InitServices(IGameContainer gameContainer,
+            GameEntitySpawnService spawnManager,
+            ISignalService signalService)
+        {
+            _gameContainer = gameContainer;
+            _spawnService = spawnManager;
+            _signalService = signalService;
+            _gameContainer.AddEntity(this);
+        }
+
+        public class Factory : PlaceholderFactory<Object, GameEntity>
         {
         }
     }
 
-    public class GameEntityFactory : IFactory<UnityEngine.Object, GameEntity>
+    public class GameEntityFactory : IFactory<Object, GameEntity>
     {
         private readonly DiContainer _container;
 

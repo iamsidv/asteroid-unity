@@ -1,11 +1,9 @@
-using System.Collections;
 using Game.Signals;
-using Game.StateManagement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Asteroids.Game.UI
+namespace Game.UI.Gameplay
 {
     public class GameplayView : BaseView
     {
@@ -14,7 +12,7 @@ namespace Asteroids.Game.UI
         [SerializeField] private GameObject stubChances;
         [SerializeField] private Image chanceImage;
         [SerializeField] private Image[] totalChances;
-        
+
         public override void OnScreenEnter()
         {
             base.OnScreenEnter();
@@ -62,6 +60,7 @@ namespace Asteroids.Game.UI
                 {
                     Destroy(totalChances[i].gameObject);
                 }
+
                 totalChances = null;
             }
         }
@@ -74,19 +73,6 @@ namespace Asteroids.Game.UI
             {
                 totalChances[i].gameObject.SetActive(false);
             }
-        }
-
-        internal void DelayedStartNewGame()
-        {
-            StartCoroutine(DelayedCall(2f));
-        }
-
-        private IEnumerator DelayedCall(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-
-            //_signalService.Publish(new GameStateUpdateSignal { Value = GameState.Ready });
-            GameStateManager.SetState<GameReadyState>();
         }
     }
 }

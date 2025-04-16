@@ -1,7 +1,4 @@
-﻿using Asteroids.Game.Signals;
-using Game.Managers;
-
-namespace Game.Signals
+﻿namespace Game.Signals
 {
     public class UpdateScoreSignal : Signal<int>
     {

@@ -1,4 +1,3 @@
-using Asteroids.Game.Signals;
 using Game.PlayerState;
 using Game.Signals;
 using Game.StateManagement;
@@ -9,18 +8,9 @@ namespace Game.Managers
 {
     public class MainManager : MonoBehaviour
     {
-        private ISignalService _signalService;
-        private IPlayerProfileService _playerProfileService;
         private GameStateManager _gameStateManager;
-
-        [Inject]
-        private void InitServices(ISignalService signalService,
-            IPlayerProfileService playerProfileService, GameStateManager gameStateManager)
-        {
-            _signalService = signalService;
-            _playerProfileService = playerProfileService;
-            _gameStateManager = gameStateManager;
-        }
+        private IPlayerProfileService _playerProfileService;
+        private ISignalService _signalService;
 
         private void OnEnable()
         {
@@ -32,6 +22,15 @@ namespace Game.Managers
         {
             _signalService.RemoveSignal<UpdateScoreSignal>(AddScore);
             _signalService.RemoveSignal<PlayerDiedSignal>(PlayerDeathSignal);
+        }
+
+        [Inject]
+        private void InitServices(ISignalService signalService,
+            IPlayerProfileService playerProfileService, GameStateManager gameStateManager)
+        {
+            _signalService = signalService;
+            _playerProfileService = playerProfileService;
+            _gameStateManager = gameStateManager;
         }
 
         private void AddScore(UpdateScoreSignal signal)
@@ -54,6 +53,7 @@ namespace Game.Managers
                 _signalService.Publish(new UpdatePlayerLivesSignal { Value = lives });
                 _signalService.Publish<PlayerReviveSignal>();
             }
+
             _playerProfileService.SetTotalLives(lives);
         }
     }

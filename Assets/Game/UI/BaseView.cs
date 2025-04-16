@@ -1,9 +1,9 @@
-﻿using Asteroids.Game.Signals;
+﻿using Game.Signals;
 using Game.StateManagement;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Game.UI
+namespace Game.UI
 {
     public class BaseView : MonoBehaviour
     {
@@ -17,9 +17,13 @@ namespace Asteroids.Game.UI
             GameStateManager = gameStateManager;
         }
 
-        public virtual void OnScreenEnter() { }
+        public virtual void OnScreenEnter()
+        {
+        }
 
-        public virtual void OnScreenExit() { }
+        public virtual void OnScreenExit()
+        {
+        }
 
         public void SetVisibility(bool state)
         {

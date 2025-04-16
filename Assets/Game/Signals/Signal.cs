@@ -1,4 +1,4 @@
-namespace Asteroids.Game.Signals
+namespace Game.Signals
 {
     public class Signal
     {

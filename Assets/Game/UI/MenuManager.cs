@@ -1,24 +1,22 @@
 using System.Collections.Generic;
-using Asteroids.Game.UI;
+using System.Threading.Tasks;
+using Game.AssetManagement;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceLocations;
+using Zenject;
 
 namespace Game.UI
 {
-    public class MenuManager : MonoBehaviour
+    [UsedImplicitly]
+    public class MenuManager
     {
-        [SerializeField] private List<BaseView> views;
+        private readonly List<BaseView> _views = new();
 
-        private static MenuManager _instance;
+        [Inject] private IAssetProvider _assetProvider;
+        [Inject] private DiContainer _container;
 
-        private void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
-        }
-
-        public static T ShowMenu<T>() where T : BaseView
+        public T ShowMenu<T>() where T : BaseView
         {
             var menu = GetMenu<T>();
             menu.SetVisibility(true);
@@ -26,17 +24,27 @@ namespace Game.UI
             return menu;
         }
 
-        public static T GetMenu<T>() where T : BaseView
+        public T GetMenu<T>() where T : BaseView
         {
-            var menu = _instance.views.Find(t => t.GetType() == typeof(T));
+            var menu = _views.Find(t => t.GetType() == typeof(T));
             return menu as T;
         }
 
-        public static void HideMenu<T>() where T : BaseView
+        public void HideMenu<T>() where T : BaseView
         {
             var menu = GetMenu<T>();
             menu.OnScreenExit();
             menu.SetVisibility(false);
+        }
+
+        public async Task LoadMenus(IList<IResourceLocation> uiResourceLocations)
+        {
+            foreach (IResourceLocation resourceLocation in uiResourceLocations)
+            {
+                GameObject go = await _assetProvider.LoadAssetAsync<GameObject>(resourceLocation.PrimaryKey);
+                BaseView viewInstance = _container.InstantiatePrefabForComponent<BaseView>(go);
+                _views.Add(viewInstance);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Asteroids.Game.Signals
+namespace Game.Signals
 {
     public delegate void SignalCallback<T>(T signal);
 

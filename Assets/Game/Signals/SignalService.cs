@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Asteroids.Game.Signals
+namespace Game.Signals
 {
     public class SignalService : ISignalService
     {
@@ -33,6 +33,7 @@ namespace Asteroids.Game.Signals
                 {
                     temp.Remove(item);
                 }
+
                 observers[typeof(T)] = temp;
             }
         }

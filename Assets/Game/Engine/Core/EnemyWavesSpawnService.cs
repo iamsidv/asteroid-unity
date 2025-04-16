@@ -1,5 +1,5 @@
-﻿using Asteroids.Game.Signals;
-using Game.Configurations;
+﻿using Game.Configurations;
+using Game.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -7,13 +7,16 @@ namespace Game.Services
 {
     public class EnemyWavesSpawnService : IInitializable
     {
-        private GameConfig _gameConfig;
-        private int _currentWave;
-        private int _waveEnemiesCount;
-        private float _timeStep;
-
         private IConfigCollectionService _configService;
+        private int _currentWave;
+        private GameConfig _gameConfig;
         private GameEntitySpawnService _spawnService;
+        private float _timeStep;
+        private int _waveEnemiesCount;
+
+        public void Initialize()
+        {
+        }
 
         [Inject]
         private void Init(IConfigCollectionService configService,
@@ -22,10 +25,6 @@ namespace Game.Services
         {
             _configService = configService;
             _spawnService = spawnService;
-        }
-
-        public void Initialize()
-        {
         }
 
         public void OnUpdate()

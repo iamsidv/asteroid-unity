@@ -1,7 +1,6 @@
-﻿using Asteroids.Game.UI;
-using Game.Engine;
-using Game.Services;
-using Game.UI;
+﻿using Game.Engine;
+using Game.UI.Gameplay;
+using Game.UI.MainMenu;
 using JetBrains.Annotations;
 using Zenject;
 
@@ -11,7 +10,7 @@ namespace Game.StateManagement
     public class GameRunningState : BaseGameState
     {
         [Inject] private GameContainer _gameContainer;
-        
+
         public override void Enter()
         {
             base.Enter();
@@ -24,7 +23,7 @@ namespace Game.StateManagement
             menu.DisplayScore(PlayerProfileService.GetScore());
             menu.SetTitle(string.Empty);
             menu.DisplayPlayerLivesUI(GameConfig.TotalLives);
-            
+
             _gameContainer.StartGame(true);
         }
 

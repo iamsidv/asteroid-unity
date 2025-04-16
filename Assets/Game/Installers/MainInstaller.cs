@@ -1,13 +1,14 @@
 using Asteroids.Game.Core;
-using Asteroids.Game.Services;
-using Asteroids.Game.Signals;
 using Game.AssetManagement;
 using Game.Configurations;
 using Game.Core;
 using Game.Engine;
 using Game.PlayerState;
 using Game.Services;
+using Game.Signals;
 using Game.StateManagement;
+using Game.UI;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Installers
@@ -16,7 +17,7 @@ namespace Game.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindFactory<UnityEngine.Object, GameEntity, GameEntity.Factory>()
+            Container.BindFactory<Object, GameEntity, GameEntity.Factory>()
                 .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnService>();
 
             Container.BindInterfacesAndSelfTo<SignalService>().AsSingle();
@@ -27,6 +28,8 @@ namespace Game.Installers
             Container.BindInterfacesAndSelfTo<ConfigCollectionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerProfileService>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoop>().AsSingle().WhenInjectedInto<GameContainer>();
+
+            Container.Bind<MenuManager>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameStateManager>().AsSingle();
             Container.Bind<IGameState>().To<GameReadyState>().AsSingle().WhenInjectedInto<GameStateManager>();

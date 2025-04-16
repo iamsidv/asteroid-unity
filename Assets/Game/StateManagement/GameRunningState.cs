@@ -1,6 +1,5 @@
 ﻿using Game.Engine;
 using Game.UI.Gameplay;
-using Game.UI.MainMenu;
 using JetBrains.Annotations;
 using Zenject;
 
@@ -18,7 +17,7 @@ namespace Game.StateManagement
             PlayerProfileService.SetScore(0);
             PlayerProfileService.SetTotalLives(GameConfig.TotalLives);
 
-            MenuManager.HideMenu<MainMenuView>();
+
             var menu = MenuManager.ShowMenu<GameplayView>();
             menu.DisplayScore(PlayerProfileService.GetScore());
             menu.SetTitle(string.Empty);

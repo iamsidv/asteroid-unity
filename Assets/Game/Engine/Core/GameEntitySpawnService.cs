@@ -13,36 +13,33 @@ namespace Game.Services
     {
         private IConfigCollectionService _configService;
         private GameEntity.Factory _factory;
-        private GameConfig _gameConfig;
 
         [Inject]
         private void Init(GameEntity.Factory factory,
-            IConfigCollectionService facade)
+            IConfigCollectionService configService)
         {
-            _configService = facade;
+            _configService = configService;
             _factory = factory;
         }
 
-        public void Initialize()
+        public void InstantiatePlayerShip()
         {
             _factory.Create(_configService.GameConfig.PlayerShip);
-
-            _gameConfig = _configService.GameConfig;
         }
 
         public IGameEntity InstantiateEnemyBullet(Vector3 position)
         {
-            return InstantiateEntity(_gameConfig.EnemyProjectile, position);
+            return InstantiateEntity(_configService.GameConfig.EnemyProjectile, position);
         }
 
         public IGameEntity InstantiatePlayerBullet(Vector3 position)
         {
-            return InstantiateEntity(_gameConfig.PlayerProjectile, position);
+            return InstantiateEntity(_configService.GameConfig.PlayerProjectile, position);
         }
 
         public IGameEntity InstantiateEntity(string entityId, Vector2 position)
         {
-            var gameplayElement = _gameConfig.GameElements.First(t => t.Id.Equals(entityId));
+            var gameplayElement = _configService.GameConfig.GameElements.First(t => t.Id.Equals(entityId));
             var gameEntity = _factory.Create(gameplayElement.Prefab);
             gameEntity.gameObject.transform.position = position;
             gameEntity.OnInitialize(gameplayElement.Score);

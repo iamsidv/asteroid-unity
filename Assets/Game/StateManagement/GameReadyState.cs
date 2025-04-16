@@ -13,6 +13,8 @@ namespace Game.StateManagement
 
         public override void Enter()
         {
+            _spawnService.InstantiatePlayerShip();
+
             MainMenuView mainMenu = MenuManager.ShowMenu<MainMenuView>();
             MenuManager.HideMenu<GameplayView>();
             mainMenu.ToggleStartButton(true);
@@ -20,7 +22,7 @@ namespace Game.StateManagement
 
         public override void Exit()
         {
-            _spawnService.Initialize();
+            MenuManager.HideMenu<MainMenuView>();
         }
     }
 }

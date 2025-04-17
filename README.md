@@ -30,6 +30,9 @@ After reviewing the code currently, I noticed the following issues/loopholes and
 - **UI Panels were rendered in a single canvas** MenuManager was singleton class created lazily, and it was using static methods instead of Dependency Injection
   <br> **Solution :** Separate UI Screen into its own independent canvases. These UI prefab screens have their own addressable address defined and the addressable label 'ui' where the asset manager instantiates the prefabs inside the UI manager. 
 
+# More improvements? 
+- We can get rid of SignalManager and eliminate extra noise in the project. It will pose issues when we want to move the game to multiplayer mode because relying on signals for state changes would pose a threat leading to irregular and unexpected behaviours in the game.
+
 # Ideologies used while creating this solution:
 1.	There should be only one update loop throughout the game instance and all the entities should register to Game Loop class after getting instantiated. This class should be responsible for running Update and Fixed Update loops for the entities.
 2.	Classes should have minimal dependencies on each other and should exist as their own individual entity.

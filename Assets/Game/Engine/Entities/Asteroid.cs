@@ -5,6 +5,13 @@ namespace Game.Engine.Entities
 {
     public class Asteroid : NonPlayableMovableEntity
     {
+        private enum AsteroidSize
+        {
+            Large,
+            Medium,
+            Small
+        }
+        
         [SerializeField] private AsteroidSize sizeType;
         [SerializeField] private string[] spawnOnDestroyIds;
 
@@ -25,13 +32,6 @@ namespace Game.Engine.Entities
             {
                 SpawnController.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
             }
-        }
-
-        private enum AsteroidSize
-        {
-            Large,
-            Medium,
-            Small
         }
     }
 }

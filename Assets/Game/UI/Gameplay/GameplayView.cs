@@ -16,16 +16,16 @@ namespace Game.UI.Gameplay
         public override void OnScreenEnter()
         {
             base.OnScreenEnter();
-            _signalService.Subscribe<DisplayScoreSignal>(OnScoreUpdated);
-            _signalService.Subscribe<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
+            SignalService.Subscribe<DisplayScoreSignal>(OnScoreUpdated);
+            SignalService.Subscribe<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
         }
 
         public override void OnScreenExit()
         {
             base.OnScreenExit();
 
-            _signalService.RemoveSignal<DisplayScoreSignal>(OnScoreUpdated);
-            _signalService.RemoveSignal<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
+            SignalService.RemoveSignal<DisplayScoreSignal>(OnScoreUpdated);
+            SignalService.RemoveSignal<UpdatePlayerLivesSignal>(OnPlayerLifeChanged);
 
             Clear();
         }

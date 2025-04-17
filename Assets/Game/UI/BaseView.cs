@@ -7,13 +7,13 @@ namespace Game.UI
 {
     public class BaseView : MonoBehaviour
     {
-        protected ISignalService _signalService;
+        protected ISignalService SignalService;
         protected GameStateManager GameStateManager;
 
         [Inject]
         private void InitSignalService(ISignalService signalService, GameStateManager gameStateManager)
         {
-            _signalService = signalService;
+            SignalService = signalService;
             GameStateManager = gameStateManager;
         }
 

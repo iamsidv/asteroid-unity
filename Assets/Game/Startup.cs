@@ -15,7 +15,7 @@ namespace Game
 
         private void OnDestroy()
         {
-            gameStateManager.ReleaseCurrentState();
+            gameStateManager.CancelCurrentStateOp();
         }
     }
 }

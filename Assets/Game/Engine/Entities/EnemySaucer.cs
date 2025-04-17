@@ -8,8 +8,8 @@ namespace Game.Engine.Entities
         [SerializeField] private float shootDelay;
         [SerializeField] private float updateDirectionDelay;
         [SerializeField] private GameEntity bulletEntity;
+        
         private float _directionTimeStep;
-
         private float _timeStep;
 
         public override void EntityUpdate()

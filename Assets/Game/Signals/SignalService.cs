@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Game.Signals
 {
+    [UsedImplicitly]
     public class SignalService : ISignalService
     {
         private readonly Dictionary<Type, List<Delegate>> observers = new Dictionary<Type, List<Delegate>>();

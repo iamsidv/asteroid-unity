@@ -18,11 +18,11 @@ namespace Game.StateManagement
 
     public abstract class BaseGameState : IGameState
     {
-        private IConfigCollectionService _configService;
+        protected IConfigCollectionService ConfigCollection;
         protected IPlayerProfileService PlayerProfileService;
         protected UiManager UiManager;
 
-        protected GameConfig GameConfig => _configService.GameConfig;
+        protected GameConfig GameConfig => ConfigCollection.GameConfig;
 
         public virtual void Enter()
         {
@@ -33,13 +33,13 @@ namespace Game.StateManagement
         }
 
         [Inject]
-        private void InitService(IConfigCollectionService configService,
+        private void InitService(IConfigCollectionService configCollection,
             IPlayerProfileService playerProfileService,
-            UiManager _uiManager)
+            UiManager uiManager)
         {
-            _configService = configService;
+            ConfigCollection = configCollection;
             PlayerProfileService = playerProfileService;
-            UiManager = _uiManager;
+            UiManager = uiManager;
         }
     }
 }

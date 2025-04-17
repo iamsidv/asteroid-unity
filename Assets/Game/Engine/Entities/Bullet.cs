@@ -11,6 +11,23 @@ namespace Game.Engine.Entities
         private bool _canUpdateScore;
         private float _timeStep;
 
+        public override void EntityStart()
+        {
+            _canUpdateScore = gameObject.CompareTag("PlayerBullet");
+        }
+
+        public override void EntityUpdate()
+        {
+            MoveEntity();
+
+            _timeStep += Time.deltaTime;
+            if (_timeStep > timeToDestroy)
+            {
+                DisposeEntity();
+                _timeStep = 0;
+            }
+        }
+        
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Asteroid") || collision.gameObject.CompareTag("Saucer"))
@@ -27,23 +44,6 @@ namespace Game.Engine.Entities
                 }
 
                 DisposeEntity();
-            }
-        }
-
-        public override void EntityStart()
-        {
-            _canUpdateScore = gameObject.CompareTag("PlayerBullet");
-        }
-
-        public override void EntityUpdate()
-        {
-            MoveEntity();
-
-            _timeStep += Time.deltaTime;
-            if (_timeStep > timeToDestroy)
-            {
-                DisposeEntity();
-                _timeStep = 0;
             }
         }
     }

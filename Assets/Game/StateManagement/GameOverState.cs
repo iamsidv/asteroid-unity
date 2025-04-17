@@ -14,9 +14,17 @@ namespace Game.StateManagement
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private CancellationToken _cancellationToken;
-        [Inject] private GameContainer _gameContainer;
-        [Inject] private GameStateManager gameStateManager;
+        private GameContainer _gameContainer;
+        private GameStateManager _gameStateManager;
 
+        [Inject]
+        private void InitState(GameContainer gameContainer,
+            GameStateManager gameStateManager)
+        {
+            _gameContainer = gameContainer;
+            _gameStateManager = gameStateManager;
+        }
+        
         public void CancelOperation()
         {
             _cancellationTokenSource?.Cancel();
@@ -31,7 +39,7 @@ namespace Game.StateManagement
             UiManager.HideMenu<MainMenuView>();
             GameplayView menu = UiManager.GetMenu<GameplayView>();
             menu.DisplayScore(PlayerProfileService.GetScore());
-            menu.SetTitle("Gameover");
+            menu.SetTitle("Game over");
             menu.Clear();
 
             _cancellationToken = _cancellationTokenSource.Token;
@@ -41,7 +49,7 @@ namespace Game.StateManagement
         private async Task AsyncStartNewGame(float delay)
         {
             await Task.Delay(TimeSpan.FromSeconds(delay), _cancellationToken);
-            gameStateManager.SetState<GameReadyState>();
+            _gameStateManager.SetState<GameReadyState>();
         }
     }
 }

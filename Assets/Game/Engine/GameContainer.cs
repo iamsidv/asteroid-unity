@@ -8,22 +8,29 @@ namespace Game.Engine
     [UsedImplicitly]
     public class GameContainer : IGameContainer, ITickable, IFixedTickable
     {
-        private IGameLoop _currentGame;
+        private IGameLoop _gameLoop;
 
         private bool _isInitialized;
 
+        [Inject]
+        private void InitContainer(IGameLoop gameLoop)
+        {
+            _gameLoop = gameLoop;
+        }
+        
         public void FixedTick()
         {
             if (!_isInitialized)
+            {
                 return;
+            }
 
-            if (_currentGame != null)
-                _currentGame.FixedUpdateFrame();
+            _gameLoop?.FixedUpdateFrame();
         }
 
         public void AddEntity(IGameEntity entity)
         {
-            if (_currentGame == null)
+            if (_gameLoop == null)
             {
                 Debug.Log("Cannot Add Entity as Game is not created");
                 return;
@@ -31,33 +38,28 @@ namespace Game.Engine
 
             entity.EntityStart();
 
-            _currentGame.AddGameEntity(entity);
+            _gameLoop.AddGameEntity(entity);
         }
 
         public void RemoveEntity(IGameEntity entity)
         {
-            if (_currentGame == null)
+            if (_gameLoop == null)
             {
                 Debug.Log("Cannot Add Entity as Game is not created");
                 return;
             }
 
-            _currentGame.RemoveGameEntity(entity);
+            _gameLoop.RemoveGameEntity(entity);
         }
 
         public void Tick()
         {
             if (!_isInitialized)
+            {
                 return;
+            }
 
-            if (_currentGame != null)
-                _currentGame.UpdateFrame();
-        }
-
-        [Inject]
-        private void InitContainer(IGameLoop gameLoop)
-        {
-            _currentGame = gameLoop;
+            _gameLoop?.UpdateFrame();
         }
 
         public void StartGame(bool startGame)
@@ -67,7 +69,7 @@ namespace Game.Engine
 
         public void CleanupGameEntities()
         {
-            _currentGame?.DisposeGameEntities();
+            _gameLoop?.DisposeGameEntities();
         }
     }
 }

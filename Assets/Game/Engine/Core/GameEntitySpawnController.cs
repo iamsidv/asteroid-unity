@@ -38,8 +38,8 @@ namespace Game.Engine.Core
         public IGameEntity InstantiateEntity(string entityId, Vector2 position)
         {
             GameplayElement gameplayElement = _configService.GameConfig.GameElements.First(t => t.Id.Equals(entityId));
-            GameEntity gameEntity = _factory.Create(gameplayElement.Prefab);
-            gameEntity.gameObject.transform.position = position;
+            IGameEntity gameEntity = _factory.Create(gameplayElement.Prefab);
+            gameEntity.GameObject.transform.position = position;
             gameEntity.OnInitialize(gameplayElement.Score);
             gameEntity.SetVisibility(true);
             return gameEntity;
@@ -47,8 +47,8 @@ namespace Game.Engine.Core
 
         private IGameEntity InstantiateEntity(IGameEntity prefab, Vector2 pos)
         {
-            GameEntity gameEntity = _factory.Create(prefab.GameObject);
-            gameEntity.gameObject.transform.position = pos;
+            IGameEntity gameEntity = _factory.Create(prefab.GameObject);
+            gameEntity.GameObject.transform.position = pos;
             gameEntity.SetVisibility(true);
             return gameEntity;
         }

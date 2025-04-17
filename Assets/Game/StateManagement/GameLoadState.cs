@@ -14,9 +14,16 @@ namespace Game.StateManagement
         private const string GameConfigAddress = "Assets/Config/GameConfig.asset";
         private readonly List<string> _uiLabel = new() { "ui" };
 
-        [Inject] private IAssetProvider _assetProvider;
-        [Inject] private IConfigCollectionService _configCollection;
-        [Inject] private GameStateManager gameStateManager;
+        private IAssetProvider _assetProvider;
+        private GameStateManager _gameStateManager;
+
+        [Inject]
+        private void InitState(IAssetProvider assetProvider,
+            GameStateManager gameStateManager)
+        {
+            _assetProvider = assetProvider;
+            _gameStateManager = gameStateManager;
+        }
 
         public override void Enter()
         {
@@ -32,13 +39,13 @@ namespace Game.StateManagement
             IList<IResourceLocation> uiResourceLocations = await _assetProvider.LoadAssetLabels(_uiLabel);
             await UiManager.LoadMenus(uiResourceLocations);
 
-            gameStateManager.SetState<GameReadyState>();
+            _gameStateManager.SetState<GameReadyState>();
         }
 
         private async Task LoadGameConfig()
         {
             GameConfig config = await _assetProvider.LoadAssetAsync<GameConfig>(GameConfigAddress);
-            _configCollection.SetGameConfig(config);
+            ConfigCollection.SetGameConfig(config);
         }
     }
 }

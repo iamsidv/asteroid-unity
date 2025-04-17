@@ -13,9 +13,16 @@ namespace Game.UI
     {
         private readonly List<BaseView> _views = new();
 
-        [Inject] private IAssetProvider _assetProvider;
-        [Inject] private DiContainer _container;
+        private IAssetProvider _assetProvider;
+        private DiContainer _container;
 
+        [Inject]
+        private void InitManager(IAssetProvider assetProvider, DiContainer container)
+        {
+            _assetProvider = assetProvider;
+            _container = container;
+        }
+        
         public T ShowMenu<T>() where T : BaseView
         {
             T menu = GetMenu<T>();

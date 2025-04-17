@@ -23,7 +23,7 @@ namespace Game.StateManagement
             }
         }
         
-        public void ReleaseCurrentState()
+        public void CancelCurrentStateOp()
         {
             if (_currentState is ICancellableOp cancellableState)
             {

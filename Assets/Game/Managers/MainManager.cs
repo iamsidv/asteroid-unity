@@ -12,6 +12,15 @@ namespace Game.Managers
         private IPlayerProfileService _playerProfileService;
         private ISignalService _signalService;
 
+        [Inject]
+        private void InitServices(ISignalService signalService,
+            IPlayerProfileService playerProfileService, GameStateManager gameStateManager)
+        {
+            _signalService = signalService;
+            _playerProfileService = playerProfileService;
+            _gameStateManager = gameStateManager;
+        }
+        
         private void OnEnable()
         {
             _signalService.Subscribe<UpdateScoreSignal>(AddScore);
@@ -22,15 +31,6 @@ namespace Game.Managers
         {
             _signalService.RemoveSignal<UpdateScoreSignal>(AddScore);
             _signalService.RemoveSignal<PlayerDiedSignal>(PlayerDeathSignal);
-        }
-
-        [Inject]
-        private void InitServices(ISignalService signalService,
-            IPlayerProfileService playerProfileService, GameStateManager gameStateManager)
-        {
-            _signalService = signalService;
-            _playerProfileService = playerProfileService;
-            _gameStateManager = gameStateManager;
         }
 
         private void AddScore(UpdateScoreSignal signal)

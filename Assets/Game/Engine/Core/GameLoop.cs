@@ -67,8 +67,7 @@ namespace Game.Engine.Core
         {
             float cameraZ = Camera.main.transform.position.z;
             _bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
-            _topRightPoint =
-                Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
+            _topRightPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
         }
 
         private void HandleScreenWarp(Transform target)

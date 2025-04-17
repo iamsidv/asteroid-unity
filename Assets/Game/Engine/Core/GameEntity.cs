@@ -1,19 +1,17 @@
-using Asteroids.Game.Core;
-using Asteroids.Game.Services;
-using Game.Services;
 using Game.Signals;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Core
+namespace Game.Engine.Core
 {
     public abstract class GameEntity : MonoBehaviour, IGameEntity
     {
         private Vector2 _direction;
-
         private IGameContainer _gameContainer;
-        protected ISignalService _signalService;
-        protected GameEntitySpawnService _spawnService;
+
+        protected ISignalService SignalService;
+        protected GameEntitySpawnController SpawnController;
         public int DieScore { get; private set; }
 
         protected Vector3 MoveDirection => _direction;
@@ -53,32 +51,18 @@ namespace Game.Core
 
         [Inject]
         private void InitServices(IGameContainer gameContainer,
-            GameEntitySpawnService spawnManager,
+            GameEntitySpawnController spawnManager,
             ISignalService signalService)
         {
             _gameContainer = gameContainer;
-            _spawnService = spawnManager;
-            _signalService = signalService;
+            SpawnController = spawnManager;
+            SignalService = signalService;
             _gameContainer.AddEntity(this);
         }
 
+        [UsedImplicitly]
         public class Factory : PlaceholderFactory<Object, GameEntity>
         {
-        }
-    }
-
-    public class GameEntityFactory : IFactory<Object, GameEntity>
-    {
-        private readonly DiContainer _container;
-
-        public GameEntityFactory(DiContainer container)
-        {
-            _container = container;
-        }
-
-        public GameEntity Create(Object param)
-        {
-            return _container.InstantiatePrefabForComponent<GameEntity>(param);
         }
     }
 }

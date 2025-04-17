@@ -1,13 +1,11 @@
 using System.Collections;
-using Asteroids.Game.Core;
 using Game.AssetManagement;
 using Game.Configurations;
-using Game.Core;
 using Game.Engine;
+using Game.Engine.Core;
 using Game.Engine.Entities;
 using Game.Managers;
 using Game.PlayerState;
-using Game.Services;
 using Game.Signals;
 using NUnit.Framework;
 using UnityEditor;
@@ -49,7 +47,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
         profileService.SetTotalLives(3);
         var totallives = profileService.GetTotalLives();
 
-        var ship = Container.Resolve<ShipMovement>();
+        var ship = Container.Resolve<PlayerShip>();
         var asteroid = Container.Resolve<Asteroid>();
         asteroid.SetVisibility(true);
 
@@ -71,7 +69,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
         profileService.SetTotalLives(3);
         var totallives = profileService.GetTotalLives();
 
-        var ship = Container.Resolve<ShipMovement>();
+        var ship = Container.Resolve<PlayerShip>();
         var saucer = Container.Resolve<EnemySaucer>();
         saucer.SetVisibility(true);
 
@@ -93,7 +91,7 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
         profileService.SetTotalLives(3);
         var totallives = profileService.GetTotalLives();
 
-        var ship = Container.Resolve<ShipMovement>();
+        var ship = Container.Resolve<PlayerShip>();
         var bullet = Container.Resolve<Bullet>();
         bullet.SetVisibility(true);
 
@@ -114,17 +112,17 @@ public class PlaymodeTestSuite : ZenjectIntegrationTestFixture
         // Call Container.Bind methods
 
         Container.Bind<MainManager>().FromNewComponentOnNewGameObject().AsSingle();
-        Container.Bind<ShipMovement>().FromComponentInNewPrefab(gameConfig.PlayerShip).AsSingle();
+        Container.Bind<PlayerShip>().FromComponentInNewPrefab(gameConfig.PlayerShip).AsSingle();
         Container.Bind<TComponent>().FromComponentInNewPrefab(mockGameObject).AsSingle();
 
         Container.BindFactory<Object, GameEntity, GameEntity.Factory>()
-            .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnService>();
+            .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnController>();
 
         Container.BindInterfacesAndSelfTo<SignalService>().AsSingle();
         Container.BindInterfacesAndSelfTo<AssetProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameContainer>().AsSingle();
-        Container.BindInterfacesAndSelfTo<EnemyWavesSpawnService>().AsSingle();
-        Container.BindInterfacesAndSelfTo<GameEntitySpawnService>().AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemySpawnController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<GameEntitySpawnController>().AsSingle();
         Container.BindInterfacesAndSelfTo<ConfigCollectionService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerProfileService>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameLoop>().AsSingle().WhenInjectedInto<GameContainer>();

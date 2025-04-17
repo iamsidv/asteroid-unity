@@ -1,19 +1,17 @@
-using Asteroids.Game.Core;
+using Game.Engine.Core;
 using UnityEngine;
 
 namespace Game.Engine.Entities
 {
     public class Asteroid : NonPlayableMovableEntity
     {
-        private enum AsteroidSize
-        {
-            Large,
-            Medium,
-            Small
-        }
-
         [SerializeField] private AsteroidSize sizeType;
         [SerializeField] private string[] spawnOnDestroyIds;
+
+        public override void EntityUpdate()
+        {
+            MoveEntity();
+        }
 
         public override void DisposeEntity()
         {
@@ -25,8 +23,15 @@ namespace Game.Engine.Entities
         {
             for (int i = 0; i < spawnOnDestroyIds?.Length; i++)
             {
-                _spawnService.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
+                SpawnController.InstantiateEntity(spawnOnDestroyIds[i], transform.position);
             }
+        }
+
+        private enum AsteroidSize
+        {
+            Large,
+            Medium,
+            Small
         }
     }
 }

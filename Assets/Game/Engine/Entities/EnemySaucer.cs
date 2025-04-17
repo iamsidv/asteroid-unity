@@ -1,5 +1,4 @@
-using Asteroids.Game.Core;
-using Game.Core;
+using Game.Engine.Core;
 using UnityEngine;
 
 namespace Game.Engine.Entities
@@ -9,13 +8,13 @@ namespace Game.Engine.Entities
         [SerializeField] private float shootDelay;
         [SerializeField] private float updateDirectionDelay;
         [SerializeField] private GameEntity bulletEntity;
-        
-        private float _timeStep;
         private float _directionTimeStep;
+
+        private float _timeStep;
 
         public override void EntityUpdate()
         {
-            base.EntityUpdate();
+            MoveEntity();
 
             if (Time.time - _timeStep > shootDelay)
             {
@@ -32,10 +31,10 @@ namespace Game.Engine.Entities
 
         private void GenerateProjectile()
         {
-            var direction = Random.insideUnitCircle.normalized;
-            var position = transform.position + (Vector3)direction;
+            Vector2 direction = Random.insideUnitCircle.normalized;
+            Vector3 position = transform.position + (Vector3)direction;
 
-            var obj = _spawnService.InstantiateEnemyBullet(position);
+            IGameEntity obj = SpawnController.InstantiateEnemyBullet(position);
             obj.SetDirection(direction);
         }
     }

@@ -1,4 +1,5 @@
-using Game.Core;
+using System;
+using Game.Engine.Core;
 using UnityEngine;
 
 namespace Game.Configurations
@@ -21,7 +22,7 @@ namespace Game.Configurations
         public Wave[] EnemyWaves => enemyWaves;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class GameplayElement
     {
         [SerializeField] private string id;
@@ -33,7 +34,7 @@ namespace Game.Configurations
         public int Score => score;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Wave
     {
         [SerializeField] private int count;

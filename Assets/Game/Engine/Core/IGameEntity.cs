@@ -1,10 +1,12 @@
-namespace Asteroids.Game.Core
+using UnityEngine;
+
+namespace Game.Engine.Core
 {
     public interface IGameEntity
     {
-        UnityEngine.GameObject GameObject { get; }
+        GameObject GameObject { get; }
 
-        void SetDirection(UnityEngine.Vector2 direction);
+        void SetDirection(Vector2 direction);
         void OnInitialize(int score);
         void EntityStart();
         void EntityUpdate();

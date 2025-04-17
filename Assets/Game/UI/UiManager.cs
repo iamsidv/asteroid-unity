@@ -9,7 +9,7 @@ using Zenject;
 namespace Game.UI
 {
     [UsedImplicitly]
-    public class MenuManager
+    public class UiManager
     {
         private readonly List<BaseView> _views = new();
 
@@ -18,7 +18,7 @@ namespace Game.UI
 
         public T ShowMenu<T>() where T : BaseView
         {
-            var menu = GetMenu<T>();
+            T menu = GetMenu<T>();
             menu.SetVisibility(true);
             menu.OnScreenEnter();
             return menu;
@@ -26,13 +26,13 @@ namespace Game.UI
 
         public T GetMenu<T>() where T : BaseView
         {
-            var menu = _views.Find(t => t.GetType() == typeof(T));
+            BaseView menu = _views.Find(t => t.GetType() == typeof(T));
             return menu as T;
         }
 
         public void HideMenu<T>() where T : BaseView
         {
-            var menu = GetMenu<T>();
+            T menu = GetMenu<T>();
             menu.OnScreenExit();
             menu.SetVisibility(false);
         }

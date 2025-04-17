@@ -9,7 +9,7 @@ namespace Game.Signals
 
         public void Subscribe<T>(SignalCallback<T> callback) where T : Signal, new()
         {
-            var localType = typeof(T);
+            Type localType = typeof(T);
 
             if (observers.ContainsKey(localType))
             {
@@ -25,11 +25,11 @@ namespace Game.Signals
         {
             if (observers.ContainsKey(typeof(T)))
             {
-                var temp = new List<Delegate>();
+                List<Delegate> temp = new List<Delegate>();
                 temp.AddRange(observers[typeof(T)]);
 
-                var toRemove = temp.FindAll(t => t.Target.Equals(callback.Target));
-                foreach (var item in toRemove)
+                List<Delegate> toRemove = temp.FindAll(t => t.Target.Equals(callback.Target));
+                foreach (Delegate item in toRemove)
                 {
                     temp.Remove(item);
                 }
@@ -45,9 +45,9 @@ namespace Game.Signals
                 signalObject = new T();
             }
 
-            if (observers.TryGetValue(typeof(T), out var callbacks))
+            if (observers.TryGetValue(typeof(T), out List<Delegate> callbacks))
             {
-                foreach (var item in callbacks)
+                foreach (Delegate item in callbacks)
                 {
                     item?.DynamicInvoke(signalObject);
                 }

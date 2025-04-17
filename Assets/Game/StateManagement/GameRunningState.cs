@@ -18,7 +18,7 @@ namespace Game.StateManagement
             PlayerProfileService.SetTotalLives(GameConfig.TotalLives);
 
 
-            var menu = MenuManager.ShowMenu<GameplayView>();
+            GameplayView menu = UiManager.ShowMenu<GameplayView>();
             menu.DisplayScore(PlayerProfileService.GetScore());
             menu.SetTitle(string.Empty);
             menu.DisplayPlayerLivesUI(GameConfig.TotalLives);

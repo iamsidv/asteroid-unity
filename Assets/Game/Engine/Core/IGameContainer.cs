@@ -1,8 +1,6 @@
-﻿using Asteroids.Game.Core;
-
-namespace Asteroids.Game.Services
+﻿namespace Game.Engine.Core
 {
-    public interface IGameContainer 
+    public interface IGameContainer
     {
         void AddEntity(IGameEntity entity);
         void RemoveEntity(IGameEntity entity);

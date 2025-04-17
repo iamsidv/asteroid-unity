@@ -1,15 +1,13 @@
 ﻿using System.Linq;
-using Asteroids.Game.Core;
 using Game.Configurations;
-using Game.Core;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Services
+namespace Game.Engine.Core
 {
     [UsedImplicitly]
-    public class GameEntitySpawnService
+    public class GameEntitySpawnController
     {
         private IConfigCollectionService _configService;
         private GameEntity.Factory _factory;
@@ -39,8 +37,8 @@ namespace Game.Services
 
         public IGameEntity InstantiateEntity(string entityId, Vector2 position)
         {
-            var gameplayElement = _configService.GameConfig.GameElements.First(t => t.Id.Equals(entityId));
-            var gameEntity = _factory.Create(gameplayElement.Prefab);
+            GameplayElement gameplayElement = _configService.GameConfig.GameElements.First(t => t.Id.Equals(entityId));
+            GameEntity gameEntity = _factory.Create(gameplayElement.Prefab);
             gameEntity.gameObject.transform.position = position;
             gameEntity.OnInitialize(gameplayElement.Score);
             gameEntity.SetVisibility(true);
@@ -49,7 +47,7 @@ namespace Game.Services
 
         private IGameEntity InstantiateEntity(IGameEntity prefab, Vector2 pos)
         {
-            var gameEntity = _factory.Create(prefab.GameObject);
+            GameEntity gameEntity = _factory.Create(prefab.GameObject);
             gameEntity.gameObject.transform.position = pos;
             gameEntity.SetVisibility(true);
             return gameEntity;

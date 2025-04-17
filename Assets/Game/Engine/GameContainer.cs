@@ -1,5 +1,4 @@
-﻿using Asteroids.Game.Core;
-using Asteroids.Game.Services;
+﻿using Game.Engine.Core;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -11,27 +10,7 @@ namespace Game.Engine
     {
         private IGameLoop _currentGame;
 
-        [Inject]
-        private void InitContainer(IGameLoop gameLoop)
-        {
-            _currentGame = gameLoop;
-        }
-
         private bool _isInitialized;
-        
-        public void StartGame(bool startGame)
-        {
-            _isInitialized = startGame;
-        }
-
-        public void Tick()
-        {
-            if (!_isInitialized)
-                return;
-
-            if (_currentGame != null)
-                _currentGame.UpdateFrame();
-        }
 
         public void FixedTick()
         {
@@ -64,6 +43,26 @@ namespace Game.Engine
             }
 
             _currentGame.RemoveGameEntity(entity);
+        }
+
+        public void Tick()
+        {
+            if (!_isInitialized)
+                return;
+
+            if (_currentGame != null)
+                _currentGame.UpdateFrame();
+        }
+
+        [Inject]
+        private void InitContainer(IGameLoop gameLoop)
+        {
+            _currentGame = gameLoop;
+        }
+
+        public void StartGame(bool startGame)
+        {
+            _isInitialized = startGame;
         }
 
         public void CleanupGameEntities()

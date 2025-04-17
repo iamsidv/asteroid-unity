@@ -1,4 +1,4 @@
-﻿namespace Asteroids.Game.Core
+﻿namespace Game.Engine.Core
 {
     public interface IGameLoop
     {

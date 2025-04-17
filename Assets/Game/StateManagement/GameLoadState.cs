@@ -30,7 +30,7 @@ namespace Game.StateManagement
             await LoadGameConfig();
 
             IList<IResourceLocation> uiResourceLocations = await _assetProvider.LoadAssetLabels(_uiLabel);
-            await MenuManager.LoadMenus(uiResourceLocations);
+            await UiManager.LoadMenus(uiResourceLocations);
 
             gameStateManager.SetState<GameReadyState>();
         }

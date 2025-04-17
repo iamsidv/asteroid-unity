@@ -19,8 +19,8 @@ namespace Game.StateManagement
     public abstract class BaseGameState : IGameState
     {
         private IConfigCollectionService _configService;
-        protected MenuManager MenuManager;
         protected IPlayerProfileService PlayerProfileService;
+        protected UiManager UiManager;
 
         protected GameConfig GameConfig => _configService.GameConfig;
 
@@ -35,11 +35,11 @@ namespace Game.StateManagement
         [Inject]
         private void InitService(IConfigCollectionService configService,
             IPlayerProfileService playerProfileService,
-            MenuManager menuManager)
+            UiManager _uiManager)
         {
             _configService = configService;
             PlayerProfileService = playerProfileService;
-            MenuManager = menuManager;
+            UiManager = _uiManager;
         }
     }
 }

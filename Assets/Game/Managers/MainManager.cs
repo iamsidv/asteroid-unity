@@ -41,7 +41,7 @@ namespace Game.Managers
 
         private void PlayerDeathSignal(PlayerDiedSignal signal)
         {
-            var lives = _playerProfileService.GetTotalLives();
+            int lives = _playerProfileService.GetTotalLives();
             lives -= 1;
             if (lives <= 0)
             {

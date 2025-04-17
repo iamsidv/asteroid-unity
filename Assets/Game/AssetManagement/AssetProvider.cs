@@ -15,7 +15,7 @@ namespace Game.AssetManagement
 
         public void LoadAssetWithCallback<TAsset>(AssetReference assetReference, Action<TAsset> callback)
         {
-            var operation = assetReference.LoadAssetAsync<TAsset>();
+            AsyncOperationHandle<TAsset> operation = assetReference.LoadAssetAsync<TAsset>();
             operation.Completed += (handler) =>
             {
                 if (handler.IsDone)

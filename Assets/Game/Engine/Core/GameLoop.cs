@@ -1,28 +1,22 @@
 ﻿using System.Collections.Generic;
-using Game.Services;
+using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Asteroids.Game.Core
+namespace Game.Engine.Core
 {
+    [UsedImplicitly]
     public class GameLoop : IGameLoop
     {
-        private EnemyWavesSpawnService _enemyWaveSpawnService;
-        private List<IGameEntity> _gameEntities;
+        private readonly EnemySpawnController _enemySpawnController;
+        private readonly List<IGameEntity> _gameEntities;
         private Vector3 _bottomLeftPoint;
         private Vector3 _topRightPoint;
 
-        public GameLoop(EnemyWavesSpawnService enemySpawnService)
+        public GameLoop(EnemySpawnController enemySpawnController)
         {
             _gameEntities = new List<IGameEntity>();
-            _enemyWaveSpawnService = enemySpawnService;
+            _enemySpawnController = enemySpawnController;
             SetCameraBounds();
-        }
-
-        private void SetCameraBounds()
-        {
-            var cameraZ = Camera.main.transform.position.z;
-            _bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
-            _topRightPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
         }
 
         public void AddGameEntity(IGameEntity gameEntity)
@@ -32,12 +26,13 @@ namespace Asteroids.Game.Core
 
         public void DisposeGameEntities()
         {
-            foreach (var item in _gameEntities)
+            foreach (IGameEntity item in _gameEntities)
             {
                 GameObject.Destroy(item.GameObject);
             }
+
             _gameEntities.Clear();
-            _enemyWaveSpawnService.Clear();
+            _enemySpawnController.Clear();
         }
 
         public void RemoveGameEntity(IGameEntity gameEntity)
@@ -50,13 +45,13 @@ namespace Asteroids.Game.Core
 
         public void UpdateFrame()
         {
-            _enemyWaveSpawnService.OnUpdate();
+            _enemySpawnController.OnUpdate();
 
             for (int i = 0; i < _gameEntities?.Count; i++)
             {
-                var entity = _gameEntities[i];
+                IGameEntity entity = _gameEntities[i];
                 entity.EntityUpdate();
-                HandleScreenWarp(entity.GameObject.transform, Vector3.zero);
+                HandleScreenWarp(entity.GameObject.transform);
             }
         }
 
@@ -68,12 +63,20 @@ namespace Asteroids.Game.Core
             }
         }
 
-        private void HandleScreenWarp(Transform target, Vector3 direction)
+        private void SetCameraBounds()
+        {
+            float cameraZ = Camera.main.transform.position.z;
+            _bottomLeftPoint = Camera.main.ScreenToWorldPoint(Vector3.zero - new Vector3(0, 0, cameraZ));
+            _topRightPoint =
+                Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height) - new Vector3(0, 0, cameraZ));
+        }
+
+        private void HandleScreenWarp(Transform target)
         {
             if (target != null)
             {
-                var pos = target.position;
-                var offset = target.localScale * 0.5f;
+                Vector3 pos = target.position;
+                Vector3 offset = target.localScale * 0.5f;
 
                 if (pos.x < _bottomLeftPoint.x - offset.x)
                 {

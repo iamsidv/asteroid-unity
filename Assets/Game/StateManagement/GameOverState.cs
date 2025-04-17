@@ -28,8 +28,8 @@ namespace Game.StateManagement
 
             _gameContainer.CleanupGameEntities();
 
-            MenuManager.HideMenu<MainMenuView>();
-            GameplayView menu = MenuManager.GetMenu<GameplayView>();
+            UiManager.HideMenu<MainMenuView>();
+            GameplayView menu = UiManager.GetMenu<GameplayView>();
             menu.DisplayScore(PlayerProfileService.GetScore());
             menu.SetTitle("Gameover");
             menu.Clear();

@@ -1,10 +1,8 @@
-using Asteroids.Game.Core;
 using Game.AssetManagement;
 using Game.Configurations;
-using Game.Core;
 using Game.Engine;
+using Game.Engine.Core;
 using Game.PlayerState;
-using Game.Services;
 using Game.Signals;
 using Game.StateManagement;
 using Game.UI;
@@ -18,18 +16,18 @@ namespace Game.Installers
         public override void InstallBindings()
         {
             Container.BindFactory<Object, GameEntity, GameEntity.Factory>()
-                .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnService>();
+                .FromFactory<PrefabFactory<GameEntity>>().WhenInjectedInto<GameEntitySpawnController>();
 
             Container.BindInterfacesAndSelfTo<SignalService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AssetProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameContainer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyWavesSpawnService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameEntitySpawnService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemySpawnController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameEntitySpawnController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConfigCollectionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerProfileService>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoop>().AsSingle().WhenInjectedInto<GameContainer>();
 
-            Container.Bind<MenuManager>().AsSingle();
+            Container.Bind<UiManager>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameStateManager>().AsSingle();
             Container.Bind<IGameState>().To<GameReadyState>().AsSingle().WhenInjectedInto<GameStateManager>();

@@ -1,4 +1,4 @@
-﻿using Game.Services;
+﻿using Game.Engine.Core;
 using Game.UI.Gameplay;
 using Game.UI.MainMenu;
 using JetBrains.Annotations;
@@ -9,20 +9,20 @@ namespace Game.StateManagement
     [UsedImplicitly]
     public class GameReadyState : BaseGameState
     {
-        [Inject] private GameEntitySpawnService _spawnService;
+        [Inject] private GameEntitySpawnController _spawnController;
 
         public override void Enter()
         {
-            _spawnService.InstantiatePlayerShip();
+            _spawnController.InstantiatePlayerShip();
 
-            MainMenuView mainMenu = MenuManager.ShowMenu<MainMenuView>();
-            MenuManager.HideMenu<GameplayView>();
+            MainMenuView mainMenu = UiManager.ShowMenu<MainMenuView>();
+            UiManager.HideMenu<GameplayView>();
             mainMenu.ToggleStartButton(true);
         }
 
         public override void Exit()
         {
-            MenuManager.HideMenu<MainMenuView>();
+            UiManager.HideMenu<MainMenuView>();
         }
     }
 }

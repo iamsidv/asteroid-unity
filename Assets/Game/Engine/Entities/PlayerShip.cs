@@ -1,11 +1,11 @@
 using System.Collections;
-using Game.Core;
+using Game.Engine.Core;
 using Game.Signals;
 using UnityEngine;
 
 namespace Game.Engine.Entities
 {
-    public class ShipMovement : GameEntity
+    public class PlayerShip : GameEntity
     {
         [SerializeField] private float maxThrust = 10;
         [SerializeField] private float rotateSpeed = 135f;
@@ -17,6 +17,27 @@ namespace Game.Engine.Entities
 
         private float _currentTime;
         private bool _isReviving;
+
+        private void OnEnable()
+        {
+            SignalService.Subscribe<PlayerReviveSignal>(OnPlayerShipRevived);
+        }
+
+        private void OnDisable()
+        {
+            SignalService.RemoveSignal<PlayerReviveSignal>(OnPlayerShipRevived);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (_isReviving)
+                return;
+
+            SignalService.Publish<PlayerDiedSignal>();
+            shipCollider2D.enabled = false;
+            renderer2D.enabled = false;
+            _isReviving = true;
+        }
 
         public override void EntityStart()
         {
@@ -31,21 +52,11 @@ namespace Game.Engine.Entities
             if (_isReviving)
                 return;
 
-            var horizontal = Input.GetAxis("Horizontal");
-
-            if (horizontal != 0)
-            {
-                var sign = Mathf.Sign(horizontal) * -1f;
-                transform.Rotate(Vector3.forward * Time.deltaTime * rotateSpeed * sign);
-                SetDirection(transform.TransformDirection(Vector3.up));
-            }
+            RotateShip();
 
             if (Input.GetKeyDown(KeyCode.Z) && Time.time - _currentTime > nextBulletSpawnTime)
             {
-                var position = transform.TransformPoint(new Vector2(0, 0.6f));
-                var obj = _spawnService.InstantiatePlayerBullet(position);
-                obj.SetDirection(MoveDirection);
-
+                SpawnBullet();
                 _currentTime = Time.time;
             }
         }
@@ -55,32 +66,35 @@ namespace Game.Engine.Entities
             if (_isReviving)
                 return;
 
-            var _addThrust = Input.GetAxis("Vertical") != 0;
-            if (_addThrust && shipRigidbody2D != null)
+            AddThrust();
+        }
+
+        private void RotateShip()
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+
+            if (horizontal != 0)
             {
-                shipRigidbody2D.AddForce(MoveDirection * maxThrust, ForceMode2D.Force);
+                float sign = Mathf.Sign(horizontal) * -1f;
+                transform.Rotate(Vector3.forward * Time.deltaTime * rotateSpeed * sign);
+                SetDirection(transform.TransformDirection(Vector3.up));
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void SpawnBullet()
         {
-            if (_isReviving)
-                return;
-
-            _signalService.Publish<PlayerDiedSignal>();
-            shipCollider2D.enabled = false;
-            renderer2D.enabled = false;
-            _isReviving = true;
+            Vector3 position = transform.TransformPoint(new Vector2(0, 0.6f));
+            IGameEntity playerBullet = SpawnController.InstantiatePlayerBullet(position);
+            playerBullet.SetDirection(MoveDirection);
         }
 
-        private void OnEnable()
+        private void AddThrust()
         {
-            _signalService.Subscribe<PlayerReviveSignal>(OnPlayerShipRevived);
-        }
-
-        private void OnDisable()
-        {
-            _signalService.RemoveSignal<PlayerReviveSignal>(OnPlayerShipRevived);
+            bool addThrust = Input.GetAxis("Vertical") != 0;
+            if (addThrust && shipRigidbody2D != null)
+            {
+                shipRigidbody2D.AddForce(MoveDirection * maxThrust, ForceMode2D.Force);
+            }
         }
 
         private void OnPlayerShipRevived(PlayerReviveSignal signal)
@@ -100,6 +114,7 @@ namespace Game.Engine.Entities
                 renderer2D.enabled = (i % 2 == 0);
                 yield return new WaitForSeconds(0.1f);
             }
+
             renderer2D.enabled = true;
             yield return new WaitForSeconds(0.5f);
             _isReviving = false;

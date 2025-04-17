@@ -1,7 +1,6 @@
-﻿using Game.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Asteroids.Game.Core
+namespace Game.Engine.Core
 {
     public abstract class NonPlayableMovableEntity : GameEntity
     {
@@ -13,14 +12,9 @@ namespace Asteroids.Game.Core
             SetDirection(Random.insideUnitCircle.normalized);
         }
 
-        public override void EntityUpdate()
+        protected void MoveEntity()
         {
             transform.position += speed * Time.deltaTime * MoveDirection;
-        }
-
-        public override void DisposeEntity()
-        {
-            base.DisposeEntity();
         }
     }
 }
